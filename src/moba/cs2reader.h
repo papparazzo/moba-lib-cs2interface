@@ -38,3 +38,5 @@ protected:
 
     int fd_read;
 };
+
+using CS2ReaderPtr = std::shared_ptr<CS2Reader>;
