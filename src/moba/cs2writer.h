@@ -33,14 +33,12 @@ class CS2Writer : private boost::noncopyable {
 public:
     static constexpr int DEFAULT_PORT_WRITE  = 15731;
 
-    CS2Writer(const std::string &host, int port = CS2Writer::DEFAULT_PORT_WRITE);
     virtual ~CS2Writer() noexcept;
 
-    void connect(const std::string &host, int port);
+    void connect(const std::string &host, int port = CS2Writer::DEFAULT_PORT_WRITE);
     void send(const CS2CanCommand &data);
 
 protected:
-
     struct sockaddr_in s_addr_write;
     int fd_write;
     std::mutex m;

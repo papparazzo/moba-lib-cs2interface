@@ -22,6 +22,7 @@
 
 #include <string>
 #include <cstring>
+#include <algorithm>
 
 #include "cs2cancommand.h"
 
@@ -46,22 +47,21 @@ inline CS2CanCommand ping() {
     return CS2CanCommand(CanCommand::CMD_PING);
 }
 
-inline CS2CanCommand getLoklist() {
-    // Komplette Lokliste -> "loks"
+inline CS2CanCommand getConfigData(const char *filename) {
     CS2CanCommand cmd;
-    //                     | cmd      | hash      | len | Ascii-code "loks" 6C->l, 6F->o, 6B->k, ...
-    unsigned char data[] = {0x00, 0x40, 0x03, 0x00, 0x08, 0x6C, 0x6F, 0x6B, 0x73, 0x00, 0x00, 0x00, 0x00};
+    unsigned char data[] = {0x00, 0x40, 0x03, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+    std::size_t maxLength = 8;
+    memcpy(&data[5], filename, std::min(strlen(filename), maxLength));
     memcpy((void*)&cmd, data, 13);
     return cmd;
 }
 
+inline CS2CanCommand getLokList() {
+    return getConfigData("loks");
+}
+
 inline CS2CanCommand getLokStat() {
-    // Aktueller Zustand der Loks -> "lokstat"
-    CS2CanCommand cmd;
-    //                     | cmd      | hash      | len | Ascii-code "loks" 6C->l, 6F->o, 6B->k, ...
-    unsigned char data[] = {0x00, 0x40, 0x03, 0x00, 0x08, 0x6C, 0x6F, 0x6B, 0x73, 0x74, 0x61, 0x74, 0x00};
-    memcpy((void*)&cmd, data, 13);
-    return cmd;
+    return getConfigData("lokstat");
 }
 
 inline CanCommand operator |(CanCommand a, CanCommand b) {
