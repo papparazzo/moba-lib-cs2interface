@@ -30,21 +30,23 @@ std::string getCommmandAsString(int cmd);
 std::string getSystemSubCommandAsString(int subCmd);
 
 inline CS2CanCommand setLocSpeed(std::uint32_t locId, std::uint16_t speed) {
-    std::uint8_t low  = speed & 0xFF;
-    std::uint8_t high = (speed >> 8) & 0xFF;
-    return CS2CanCommand{CanCommand::CMD_LOCO_SPEED, 6, locId, low, high};
+    return CS2CanCommand{CanCommand::CMD_LOCO_SPEED, 6, locId, speed};
 }
 
 inline CS2CanCommand setEmergencyStop() {
-    return CS2CanCommand{CanCommand::CMD_SYSTEM, 5, 0x00000000, static_cast<std::uint8_t>(CanSystemSubCommand::SYS_SUB_CMD_SYSTEM_STOP)};
+    return CS2CanCommand{CanCommand::CMD_SYSTEM, 5, static_cast<std::uint32_t>(0x0), static_cast<std::uint8_t>(CanSystemSubCommand::SYS_SUB_CMD_SYSTEM_STOP)};
 }
 
 inline CS2CanCommand setEmergencyStopClearing() {
-    return CS2CanCommand{CanCommand::CMD_SYSTEM, 5, 0x00000000, static_cast<std::uint8_t>(CanSystemSubCommand::SYS_SUB_CMD_SYSTEM_GO)};
+    return CS2CanCommand{CanCommand::CMD_SYSTEM, 5, static_cast<std::uint32_t>(0x0), static_cast<std::uint8_t>(CanSystemSubCommand::SYS_SUB_CMD_SYSTEM_GO)};
+}
+
+inline CS2CanCommand setHalt() {
+    return CS2CanCommand{CanCommand::CMD_SYSTEM, 5, static_cast<std::uint32_t>(0x0), static_cast<std::uint8_t>(CanSystemSubCommand::SYS_SUB_CMD_SYSTEM_HALT)};
 }
 
 inline CS2CanCommand ping() {
-    return CS2CanCommand(CanCommand::CMD_PING);
+    return CS2CanCommand{CanCommand::CMD_PING};
 }
 
 inline CS2CanCommand getConfigData(const char *filename) {
