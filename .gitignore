@@ -1,6 +1,8 @@
 # http://www.gnu.org/software/automake
 
 Makefile.in
+Makefile
+/src/moba/Makefile
 
 # http://www.gnu.org/software/autoconf
 
@@ -9,7 +11,6 @@ Makefile.in
 /compile
 /stamp-h1
 /config.log
-/Makefile
 /.deps
 /m4/*
 
@@ -72,6 +73,5 @@ Makefile.in
 
 .deps/
 .dirstamp
-/src/Makefile
 /src/.libs/libmobacommon.so.0.0.0
 /src/.libs/libmobacommon.so.0
