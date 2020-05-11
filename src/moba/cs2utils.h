@@ -33,6 +33,18 @@ inline CS2CanCommand setLocSpeed(std::uint32_t locId, std::uint16_t speed) {
     return CS2CanCommand{CanCommand::CMD_LOCO_SPEED, 6, locId, speed};
 }
 
+inline CS2CanCommand setLocFunction(std::uint32_t locId, std::uint8_t function, bool on) {
+    return CS2CanCommand{CanCommand::CMD_LOCO_FUNCTION, 6, locId, function, static_cast<std::uint8_t>(on ? 1 : 0)};
+}
+
+inline CS2CanCommand setLocDirection(std::uint32_t locId, std::uint8_t direction) {
+    return CS2CanCommand{CanCommand::CMD_LOCO_DIRECTION, 5, locId, direction};
+}
+
+inline CS2CanCommand setSwitch(std::uint32_t locId, bool r, bool on) {
+    return CS2CanCommand{CanCommand::CMD_SET_SWITCH, 6, locId, static_cast<std::uint8_t>(r ? 0 : 1), static_cast<std::uint8_t>(on ? 0 : 1)};
+}
+
 inline CS2CanCommand setEmergencyStop() {
     return CS2CanCommand{CanCommand::CMD_SYSTEM, 5, static_cast<std::uint32_t>(0x0), static_cast<std::uint8_t>(CanSystemSubCommand::SYS_SUB_CMD_SYSTEM_STOP)};
 }
@@ -64,6 +76,18 @@ inline CS2CanCommand getLokList() {
 
 inline CS2CanCommand getLokStat() {
     return getConfigData("lokstat");
+}
+
+inline CS2CanCommand getMagList() {
+    return getConfigData("mags");
+}
+
+inline CS2CanCommand getMagStat() {
+    return getConfigData("magstat");
+}
+
+inline std::uint32_t convertMMToLocId(std::uint8_t addr) {
+    return 12288 + addr - 1;
 }
 
 inline CanCommand operator |(CanCommand a, CanCommand b) {
