@@ -2,6 +2,7 @@ AUTOMAKE_OPTIONS = subdir-objects
 noinst_LIBRARIES = \
     libcs2interface.a
 libcs2interface_a_SOURCES = \
+    printcancommand.cpp \
     configparser.cpp \
     cs2reader.cpp \
     cs2utils.cpp \
