@@ -24,6 +24,10 @@
 #include <cstdio>
 
 bool PrintCanCommand::handleCanCommand(const CS2CanCommand &cmd) {
+    if(!printCommand(cmd)) {
+        return false;
+    }
+
     printf(
         "%02X %02X - %02X %02X - %02X - %02X %02X %02X %02X - %02X %02X %02X %02X\n",
         static_cast<unsigned int>(cmd.header[0]),
@@ -47,7 +51,7 @@ bool PrintCanCommand::handleCanCommand(const CS2CanCommand &cmd) {
         response = true;
     }
 
-    uint8_t head = cmd.header[1] & ~0x01;
+    std::uint8_t head = cmd.header[1] & ~0x01;
 
     std::cout << (response ? "[R] " : "[ ] ") << getCommmandAsString(head);
 
@@ -58,5 +62,19 @@ bool PrintCanCommand::handleCanCommand(const CS2CanCommand &cmd) {
     std::cout << std::endl;
     std::cout << "---------------------------------------------------------------";
     std::cout << std::endl;
+    return true;
+}
+
+bool PrintCanCommand::printCommand(const CS2CanCommand &cmd) {
+    if(allowed.empty()) {
+        return true;
+    }
+
+    auto head = static_cast<CanCommand>(cmd.header[1] & ~0x01);
+
+    if(allowed.find(head) != allowed.end()) {
+        return true;
+    }
+
     return false;
 }

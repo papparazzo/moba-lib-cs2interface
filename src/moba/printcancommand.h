@@ -21,14 +21,24 @@
 #pragma once
 
 #include "cs2cancommand.h"
+#include <set>
 
 class PrintCanCommand {
 public:
+    PrintCanCommand() {
+    }
+
+    PrintCanCommand(const std::set<CanCommand> &allowed) : allowed{allowed} {
+    }
+
     virtual ~PrintCanCommand() {
     }
 
     bool handleCanCommand(const CS2CanCommand &cmd);
-private:
 
+protected:
+    std::set<CanCommand> allowed;
+
+    bool printCommand(const CS2CanCommand &cmd);
 };
 
