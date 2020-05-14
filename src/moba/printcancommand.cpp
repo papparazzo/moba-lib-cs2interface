@@ -66,13 +66,27 @@ bool PrintCanCommand::handleCanCommand(const CS2CanCommand &cmd) {
 }
 
 bool PrintCanCommand::printCommand(const CS2CanCommand &cmd) {
-    if(allowed.empty()) {
+    if(allowedCommands.empty() && allowedSubCommands.empty()) {
         return true;
     }
 
     auto head = static_cast<CanCommand>(cmd.header[1] & ~0x01);
 
-    if(allowed.find(head) != allowed.end()) {
+    if(allowedCommands.find(head) != allowedCommands.end()) {
+        return true;
+    }
+
+    if(head != CanCommand::CMD_SYSTEM) {
+        return false;
+    }
+
+    if(allowedSubCommands.empty()) {
+        return true;
+    }
+
+    auto sub = static_cast<CanSystemSubCommand>(cmd.data[0]);
+
+    if(allowedSubCommands.find(sub) != allowedSubCommands.end()) {
         return true;
     }
 

@@ -28,7 +28,11 @@ public:
     PrintCanCommand() {
     }
 
-    PrintCanCommand(const std::set<CanCommand> &allowed) : allowed{allowed} {
+    PrintCanCommand(const std::set<CanCommand> &allowedCommands) : allowedCommands{allowedCommands} {
+    }
+
+    PrintCanCommand(const std::set<CanCommand> &allowedCommands, const std::set<CanSystemSubCommand> &allowedSubCommands) :
+    allowedCommands{allowedCommands}, allowedSubCommands{allowedSubCommands} {
     }
 
     virtual ~PrintCanCommand() {
@@ -37,7 +41,8 @@ public:
     bool handleCanCommand(const CS2CanCommand &cmd);
 
 protected:
-    std::set<CanCommand> allowed;
+    std::set<CanCommand> allowedCommands;
+    std::set<CanSystemSubCommand> allowedSubCommands;
 
     bool printCommand(const CS2CanCommand &cmd);
 };
