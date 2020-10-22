@@ -24,16 +24,14 @@
 #include <iostream>
 
 bool ConfigParser::handleCanCommand(const CS2CanCommand &cmd) {
-    if(
-        cmd.header[1] != static_cast<uint8_t>(CanCommand::CMD_CONFIG_DATA_STREAM)
-    ) {
+    if(cmd.header[1] != static_cast<uint8_t>(CanCommand::CMD_CONFIG_DATA_STREAM)) {
         return false;
     }
 
     static bool firstByte = false;
     static bool parsing = false;
 
-    if((cmd.len == 6 && parsing) || (cmd.len == 8 && !parsing)) {
+    if(((cmd.len == 6 || cmd.len == 7) && parsing) || (cmd.len == 8 && !parsing)) {
         throw ParseConfigException{"currently parsing"};
     }
 
@@ -44,6 +42,7 @@ bool ConfigParser::handleCanCommand(const CS2CanCommand &cmd) {
             firstByte = true;
             configData.crc = cmd.getWordAt4();
             configData.dataLengthCompressed = cmd.getDoubleWordAt0();
+            configData.dataCompressed.clear();
             configData.dataCompressed.reserve(configData.dataLengthCompressed);
             return true;
 
@@ -94,7 +93,6 @@ void ConfigParser::handleConfigWriter() {
     if(getCRC(&configData.dataCompressed[0], configData.dataCompressed.size()) != configData.crc) {
         throw ParseConfigException{"crc-check failed!"};
     }
-
     unzipData();
 }
 
@@ -110,7 +108,8 @@ void ConfigParser::unzipData() {
 
     std::cout << configData.dataLengthDecompresed << std::endl;
 
-    unsigned char out[configData.dataLengthDecompresed];
+    unsigned char out[configData.dataLengthDecompresed + 1];
+    out[configData.dataLengthDecompresed] = '\0';
 
     zipStream.strm.avail_out = configData.dataLengthDecompresed;
     zipStream.strm.next_out = out;
