@@ -20,10 +20,11 @@
 
 #pragma once
 
+#include "cancommandhandlerinterface.h"
 #include "cs2cancommand.h"
 #include <set>
 
-class PrintCanCommand {
+class PrintCanCommand: public CanCommadHandlerInterface {
 public:
     PrintCanCommand() {
     }
