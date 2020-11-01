@@ -20,19 +20,15 @@
 
 #pragma once
 
-#include "cs2cancommand.h"
 #include <exception>
-#include <cstdint>
 #include <string>
-#include <vector>
-#include <zlib.h>
 
-class ParseConfigException : public std::exception {
+class ConfigParserException : public std::exception {
 public:
-    virtual ~ParseConfigException() noexcept {
+    virtual ~ConfigParserException() noexcept {
     }
 
-    ParseConfigException(const std::string &what) {
+    ConfigParserException(const std::string &what) {
         this->what__ = what;
     }
 
@@ -48,44 +44,4 @@ class ConfigParser {
 public:
     ConfigParser() {
     }
-
-    virtual ~ConfigParser() noexcept {
-    }
-
-    bool handleCanCommand(const CS2CanCommand &cmd);
-
-protected:
-    void handleConfigWriter();
-
-    std::uint16_t updateCRC(std::uint16_t crc, std::uint8_t input);
-    std::uint16_t getCRC(std::uint8_t *data, std::size_t length);
-
-    void unzipData();
-
-    struct ConfigData {
-        std::uint32_t dataLengthDecompresed;
-        std::uint32_t dataLengthCompressed;
-        std::uint16_t crc;
-
-        std::vector<std::uint8_t> dataCompressed;
-
-    } configData;
-
-    struct ZipStream {
-        ZipStream() {
-            strm.zalloc = Z_NULL;
-            strm.zfree = Z_NULL;
-            strm.opaque = Z_NULL;
-            strm.avail_in = 0;
-            strm.next_in = Z_NULL;
-
-            if(inflateInit(&strm) != Z_OK){
-                throw ParseConfigException{"inflateInit failed"};
-            }
-        }
-        virtual ~ZipStream() {
-            inflateEnd(&strm);
-        }
-        z_stream strm;
-    };
 };
