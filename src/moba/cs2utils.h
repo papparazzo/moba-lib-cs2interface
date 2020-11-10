@@ -29,20 +29,20 @@
 std::string getCommmandAsString(int cmd);
 std::string getSystemSubCommandAsString(int subCmd);
 
-inline CS2CanCommand setLocSpeed(std::uint32_t locId, std::uint16_t speed) {
-    return CS2CanCommand{CanCommand::CMD_LOCO_SPEED, 6, locId, speed};
+inline CS2CanCommand setLocSpeed(std::uint32_t localId, std::uint16_t speed) {
+    return CS2CanCommand{CanCommand::CMD_LOCO_SPEED, 6, localId, speed};
 }
 
-inline CS2CanCommand setLocFunction(std::uint32_t locId, std::uint8_t function, bool on) {
-    return CS2CanCommand{CanCommand::CMD_LOCO_FUNCTION, 6, locId, function, static_cast<std::uint8_t>(on ? 1 : 0)};
+inline CS2CanCommand setLocFunction(std::uint32_t localId, std::uint8_t function, bool on) {
+    return CS2CanCommand{CanCommand::CMD_LOCO_FUNCTION, 6, localId, function, static_cast<std::uint8_t>(on ? 1 : 0)};
 }
 
-inline CS2CanCommand setLocDirection(std::uint32_t locId, std::uint8_t direction) {
-    return CS2CanCommand{CanCommand::CMD_LOCO_DIRECTION, 5, locId, direction};
+inline CS2CanCommand setLocDirection(std::uint32_t localId, std::uint8_t direction) {
+    return CS2CanCommand{CanCommand::CMD_LOCO_DIRECTION, 5, localId, direction};
 }
 
-inline CS2CanCommand setSwitch(std::uint32_t locId, bool r, bool on) {
-    return CS2CanCommand{CanCommand::CMD_SET_SWITCH, 6, locId, static_cast<std::uint8_t>(r ? 0 : 1), static_cast<std::uint8_t>(on ? 0 : 1)};
+inline CS2CanCommand setSwitch(std::uint32_t localId, bool r, bool on) {
+    return CS2CanCommand{CanCommand::CMD_SET_SWITCH, 6, localId, static_cast<std::uint8_t>(r ? 0 : 1), static_cast<std::uint8_t>(on ? 0 : 1)};
 }
 
 inline CS2CanCommand setEmergencyStop() {
