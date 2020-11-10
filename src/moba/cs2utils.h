@@ -45,6 +45,10 @@ inline CS2CanCommand setSwitch(std::uint32_t localId, bool r, bool on) {
     return CS2CanCommand{CanCommand::CMD_SET_SWITCH, 6, localId, static_cast<std::uint8_t>(r ? 0 : 1), static_cast<std::uint8_t>(on ? 0 : 1)};
 }
 
+inline CS2CanCommand setLocoHalt(std::uint32_t localId) {
+    return CS2CanCommand{CanCommand::CMD_SYSTEM, 5, localId, static_cast<std::uint8_t>(CanSystemSubCommand::SYS_SUB_CMD_LOCO_EMERGENCY_STOP)};
+}
+
 inline CS2CanCommand setEmergencyStop() {
     return CS2CanCommand{CanCommand::CMD_SYSTEM, 5, static_cast<std::uint32_t>(0x0), static_cast<std::uint8_t>(CanSystemSubCommand::SYS_SUB_CMD_SYSTEM_STOP)};
 }
