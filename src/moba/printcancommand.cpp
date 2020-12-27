@@ -56,7 +56,7 @@ bool PrintCanCommand::handleCanCommand(const CS2CanCommand &cmd) {
     std::cout << (response ? "[R] " : "[ ] ") << getCommmandAsString(head);
 
     if(head == CMD_SYSTEM) {
-        std::cout << " - " << getSystemSubCommandAsString(cmd.data[0]);
+        std::cout << " - " << getSystemSubCommandAsString(cmd.data[4]);
     }
 
     std::cout << std::endl;
