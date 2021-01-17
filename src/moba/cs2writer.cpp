@@ -27,6 +27,9 @@
 #include <unistd.h>
 #include <cstring>
 
+CS2Writer::CS2Writer(): fd_write{-1} {
+}
+
 CS2Writer::~CS2Writer() {
     if(fd_write != -1) {
         ::close(fd_write);
