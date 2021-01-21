@@ -27,6 +27,9 @@
 #include <unistd.h>
 #include <cstring>
 
+#include <cerrno>
+#include <cstring>
+
 CS2Reader::~CS2Reader() {
     if(fd_read != -1) {
         ::close(fd_read);
@@ -56,8 +59,11 @@ CS2CanCommand CS2Reader::read() const {
     struct sockaddr_in s_addr_other;
     socklen_t slen = sizeof(s_addr_other);
 
-    if(::recvfrom(fd_read, (void*)&data, sizeof(data), 0, (struct sockaddr *) &s_addr_other, &slen) == -1) {
-        throw CS2ConnectorException{"::recvfrom returned -1"};
+    // Try again on interrupted function call
+    while(::recvfrom(fd_read, (void*)&data, sizeof(data), 0, (struct sockaddr *) &s_addr_other, &slen) == -1) {
+        if(errno != EINTR) {
+            throw CS2ConnectorException{std::strerror(errno)};
+        }
     }
     return data;
 }
