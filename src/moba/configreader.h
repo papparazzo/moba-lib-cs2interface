@@ -48,7 +48,7 @@ private:
 
 class ConfigReader: public CanCommadHandlerInterface {
 public:
-    ConfigReader(std::function<void(unsigned char*, std::uint32_t length)> callback);
+    ConfigReader(std::function<void(const std::string&)> callback);
 
     virtual ~ConfigReader() noexcept {
     }
@@ -63,7 +63,7 @@ protected:
 
     void unzipData();
 
-    std::function<void(unsigned char*, std::uint32_t length)> callback;
+    std::function<void(const std::string&)> callback;
 
     struct ConfigData {
         std::uint32_t dataLengthDecompresed;

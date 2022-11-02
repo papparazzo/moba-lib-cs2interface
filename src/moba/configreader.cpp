@@ -23,7 +23,7 @@
 #include <cstring>
 #include <iostream>
 
-ConfigReader::ConfigReader(std::function<void(unsigned char*, std::uint32_t length)> callback): callback{callback} {
+ConfigReader::ConfigReader(std::function<void(const std::string&)> callback): callback{callback} {
 }
 
 bool ConfigReader::handleCanCommand(const CS2CanCommand &cmd) {
@@ -118,6 +118,6 @@ void ConfigReader::unzipData() {
         throw ConfigReaderException{"decompress of stream failed"};
     }
 
-    callback(out, configData.dataLengthDecompresed);
+    callback(std::string(reinterpret_cast<char*>(out), configData.dataLengthDecompresed));
 }
 
