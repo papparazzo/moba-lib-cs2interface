@@ -21,6 +21,7 @@
 #pragma once
 
 #include "cancommandhandlerinterface.h"
+#include "configreaderhandlerinterface.h"
 #include "cs2cancommand.h"
 #include <exception>
 #include <cstdint>
@@ -28,8 +29,9 @@
 #include <vector>
 #include <zlib.h>
 #include <functional>
+#include <map>
 
-class ConfigReaderException : public std::exception {
+class ConfigReaderException: public std::exception {
 public:
     virtual ~ConfigReaderException() noexcept {
     }
@@ -48,12 +50,17 @@ private:
 
 class ConfigReader: public CanCommadHandlerInterface {
 public:
-    ConfigReader(std::function<void(const std::string&)> callback);
+
+    ConfigReader();
+
+    ConfigReader(const ConfigReader& orig) = delete;
 
     virtual ~ConfigReader() noexcept {
     }
 
     bool handleCanCommand(const CS2CanCommand &cmd);
+
+    void addHandler(ConfigReaderHandlerPtr handler);
 
 protected:
     void handleConfigWriter();
@@ -63,7 +70,7 @@ protected:
 
     void unzipData();
 
-    std::function<void(const std::string&)> callback;
+    std::map<std::string, ConfigReaderHandlerPtr> handlers;
 
     struct ConfigData {
         std::uint32_t dataLengthDecompresed;

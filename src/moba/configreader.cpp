@@ -23,7 +23,11 @@
 #include <cstring>
 #include <iostream>
 
-ConfigReader::ConfigReader(std::function<void(const std::string&)> callback): callback{callback} {
+ConfigReader::ConfigReader() {
+}
+
+void ConfigReader::addHandler(ConfigReaderHandlerPtr handler) {
+    handlers[handler->getName()] = handler;
 }
 
 bool ConfigReader::handleCanCommand(const CS2CanCommand &cmd) {
@@ -118,6 +122,20 @@ void ConfigReader::unzipData() {
         throw ConfigReaderException{"decompress of stream failed"};
     }
 
-    callback(std::string(reinterpret_cast<char*>(out), configData.dataLengthDecompresed));
+    auto d = std::string(reinterpret_cast<char*>(out), configData.dataLengthDecompresed);
+
+    auto p = d.find(']');
+    if(std::string::npos != p) {
+        throw ConfigReaderException{"missing ']' in stream"};
+    } 
+    
+    auto k = d.substr(1, p);
+    auto iter = handlers.find(k);
+
+    if(handlers.end() == iter) {
+        return;
+    }
+
+    iter->second->handleConfigData(d);
 }
 
