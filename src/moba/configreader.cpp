@@ -125,10 +125,10 @@ void ConfigReader::unzipData() {
     auto d = std::string(reinterpret_cast<char*>(out), configData.dataLengthDecompresed);
 
     auto p = d.find(']');
-    if(std::string::npos != p) {
+    if(std::string::npos == p) {
         throw ConfigReaderException{"missing ']' in stream"};
-    } 
-    
+    }
+
     auto k = d.substr(1, p);
     auto iter = handlers.find(k);
 
