@@ -1,7 +1,7 @@
 /*
- *  Project:    moba-lib-cs2interace
+ *  Project:    moba-connector
  *
- *  Copyright (C) 2019 Stefan Paproth <pappi-@gmx.de>
+ *  Copyright (C) 2020 Stefan Paproth <pappi-@gmx.de>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as
@@ -20,28 +20,27 @@
 
 #pragma once
 
-#include <exception>
-#include <string>
+#include "configreaderhandlerinterface.h"
+#include "configreaderexception.h"
+#include <map>
 
-class ConfigParserException : public std::exception {
+class ConfigLoklistReader: public ConfigReaderHandlerInterface {
 public:
-    virtual ~ConfigParserException() noexcept {
+
+    struct Locomotive {
+        std::string name;
+        std::map<std::uint32_t, std::uint32_t> functions;
+    };
+
+    std::map<std::uint32_t, std::shared_ptr<Locomotive>> locomotives;
+
+
+    std::string getName() {
+        return "lokomotive";
     }
 
-    ConfigParserException(const std::string &what) {
-        this->what__ = what;
-    }
+    virtual void handleConfigData(const std::string &data);
 
-    virtual const char* what() const noexcept {
-        return this->what__.c_str();
-    }
-
-private:
-    std::string what__;
-};
-
-class ConfigParser {
-public:
-    ConfigParser() {
-    }
+protected:
+    std::string getToken(const std::string &t, std::string &v);
 };

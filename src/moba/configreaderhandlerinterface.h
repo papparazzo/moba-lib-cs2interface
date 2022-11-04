@@ -25,7 +25,7 @@
 
 class ConfigReaderHandlerInterface {
 public:
-    virtual bool handleConfigData(const std::string &data) = 0;
+    virtual void handleConfigData(const std::string &data) = 0;
     virtual std::string getName() = 0;
 };
 

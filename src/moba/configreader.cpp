@@ -129,7 +129,7 @@ void ConfigReader::unzipData() {
         throw ConfigReaderException{"missing ']' in stream"};
     }
 
-    auto k = d.substr(1, p);
+    auto k = d.substr(1, p - 1);
     auto iter = handlers.find(k);
 
     if(handlers.end() == iter) {
