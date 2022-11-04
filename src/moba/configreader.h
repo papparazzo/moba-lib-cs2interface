@@ -23,6 +23,7 @@
 #include "cancommandhandlerinterface.h"
 #include "configreaderhandlerinterface.h"
 #include "cs2cancommand.h"
+#include "configreaderexception.h"
 #include <exception>
 #include <cstdint>
 #include <string>
@@ -30,23 +31,6 @@
 #include <zlib.h>
 #include <functional>
 #include <map>
-
-class ConfigReaderException: public std::exception {
-public:
-    virtual ~ConfigReaderException() noexcept {
-    }
-
-    ConfigReaderException(const std::string &what) {
-        this->what__ = what;
-    }
-
-    virtual const char* what() const noexcept {
-        return this->what__.c_str();
-    }
-
-private:
-    std::string what__;
-};
 
 class ConfigReader: public CanCommadHandlerInterface {
 public:
