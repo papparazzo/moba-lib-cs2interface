@@ -31,7 +31,7 @@
 
 class CS2Writer : private boost::noncopyable {
 public:
-    static constexpr int DEFAULT_PORT_WRITE  = 15731;
+    static constexpr int DEFAULT_PORT_WRITE = 15731;
 
     CS2Writer();
 
