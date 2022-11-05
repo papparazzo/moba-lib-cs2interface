@@ -34,7 +34,6 @@ public:
 
     std::map<std::uint32_t, std::shared_ptr<Locomotive>> locomotives;
 
-
     std::string getName() {
         return "lokomotive";
     }
