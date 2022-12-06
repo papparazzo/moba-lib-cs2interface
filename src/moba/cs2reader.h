@@ -30,6 +30,8 @@ public:
     static constexpr int DEFAULT_PORT_READ = 15730;
     virtual ~CS2Reader() noexcept;
 
+    CS2Reader() = default;
+
     CS2Reader(const CS2Reader&) = delete;
     CS2Reader& operator=(const CS2Reader&) = delete;
 
