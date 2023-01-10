@@ -41,7 +41,7 @@ void ConfigLoklistReader::handleConfigData(const std::string &data) {
         auto k = getToken(t, v);
 
         if(k == " .minor" && v != "4") {
-            throw 4; // TODO: Exception!
+            throw ConfigReaderException{"minor version != 4"};
         } else if(k == " .name") {
             name = v;
         } else if(k == " .uid") {
