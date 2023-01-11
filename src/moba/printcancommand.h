@@ -26,18 +26,13 @@
 
 class PrintCanCommand: public CanCommadHandlerInterface {
 public:
-    PrintCanCommand() {
-    }
+    PrintCanCommand() = default;
 
-    PrintCanCommand(const std::set<CanCommand> &allowedCommands) : allowedCommands{allowedCommands} {
-    }
+    PrintCanCommand(const std::set<CanCommand> &allowedCommands);
 
-    PrintCanCommand(const std::set<CanCommand> &allowedCommands, const std::set<CanSystemSubCommand> &allowedSubCommands) :
-    allowedCommands{allowedCommands}, allowedSubCommands{allowedSubCommands} {
-    }
+    PrintCanCommand(const std::set<CanCommand> &allowedCommands, const std::set<CanSystemSubCommand> &allowedSubCommands);
 
-    virtual ~PrintCanCommand() {
-    }
+    virtual ~PrintCanCommand();
 
     bool handleCanCommand(const CS2CanCommand &cmd);
 

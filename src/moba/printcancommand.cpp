@@ -23,6 +23,16 @@
 #include <iostream>
 #include <cstdio>
 
+PrintCanCommand::PrintCanCommand(const std::set<CanCommand> &allowedCommands): allowedCommands{allowedCommands} {
+}
+
+PrintCanCommand::PrintCanCommand(const std::set<CanCommand> &allowedCommands, const std::set<CanSystemSubCommand> &allowedSubCommands) :
+allowedCommands{allowedCommands}, allowedSubCommands{allowedSubCommands} {
+}
+
+PrintCanCommand::~PrintCanCommand() {
+}
+
 bool PrintCanCommand::handleCanCommand(const CS2CanCommand &cmd) {
     if(!printCommand(cmd)) {
         return false;
