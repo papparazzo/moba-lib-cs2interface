@@ -20,6 +20,7 @@
 
 #include "cs2utils.h"
 #include "cs2cancommand.h"
+#include "cancommandexception.h"
 
 #include <string>
 
@@ -146,4 +147,119 @@ std::string getSystemSubCommandAsString(int subCmd) {
     }
 }
 
+CanCommand getCommandFromString(const std::string &cmd) {
+    if(cmd == "CMD_SYSTEM") {
+        return CMD_SYSTEM;
+    }
+    if(cmd == "CMD_LOCO_DISCOVERY") {
+        return CMD_LOCO_DISCOVERY;
+    }
+    if(cmd == "CMD_MFX_BIND") {
+        return CMD_MFX_BIND;
+    }
+    if(cmd == "CMD_MFX_VERIFY") {
+        return CMD_MFX_VERIFY;
+    }
+    if(cmd == "CMD_LOCO_SPEED") {
+        return CMD_LOCO_SPEED;
+    }
+    if(cmd == "CMD_LOCO_DIRECTION") {
+        return CMD_LOCO_DIRECTION;
+    }
+    if(cmd == "CMD_LOCO_FUNCTION") {
+        return CMD_LOCO_FUNCTION;
+    }
+    if(cmd == "CMD_READ_CONFIG") {
+        return CMD_READ_CONFIG;
+    }
+    if(cmd == "CMD_WRITE_CONFIG") {
+        return CMD_WRITE_CONFIG;
+    }
+    if(cmd == "CMD_SET_SWITCH") {
+        return CMD_SET_SWITCH;
+    }
+    if(cmd == "CMD_ATTACHMENTS_CONFIG") {
+        return CMD_ATTACHMENTS_CONFIG;
+    }
+    if(cmd == "CMD_S88_POLLING") {
+        return CMD_S88_POLLING;
+    }
+    if(cmd == "CMD_S88_EVENT") {
+        return CMD_S88_EVENT;
+    }
+    if(cmd == "CMD_SX1_EVENT") {
+        return CMD_SX1_EVENT;
+    }
+    if(cmd == "CMD_PING") {
+        return CMD_PING;
+    }
+    if(cmd == "CMD_UPDATE_OFFER") {
+        return CMD_UPDATE_OFFER;
+    }
+    if(cmd == "CMD_READ_CONFIG_DATA") {
+        return CMD_READ_CONFIG_DATA;
+    }
+    if(cmd == "CMD_BOOTLOADER_CAN") {
+        return CMD_BOOTLOADER_CAN;
+    }
+    if(cmd == "CMD_BOOTLOADER_TRACK") {
+        return CMD_BOOTLOADER_TRACK;
+    }
+    if(cmd == "CMD_STATUS_DATA_CONFIGURATION") {
+        return CMD_STATUS_DATA_CONFIGURATION;
+    }
+    if(cmd == "CMD_CONFIG_DATA_QUERY") {
+        return CMD_CONFIG_DATA_QUERY;
+    }
+    if(cmd == "CMD_CONFIG_DATA_STREAM") {
+        return CMD_CONFIG_DATA_STREAM;
+    }
+    if(cmd == "CMD_60128_CONNECT_6021_DATA_STREAM") {
+        return CMD_60128_CONNECT_6021_DATA_STREAM;
+    }
+    throw CanCommandException{"Invalid can command given"};
+}
+
+CanSystemSubCommand getSystemSubCommandFromString(const std::string &cmd) {
+    if(cmd == "SYS_SUB_CMD_SYSTEM_STOP") {
+        return SYS_SUB_CMD_SYSTEM_STOP;
+    }
+    if(cmd == "SYS_SUB_CMD_SYSTEM_GO") {
+        return SYS_SUB_CMD_SYSTEM_GO;
+    }
+    if(cmd == "SYS_SUB_CMD_SSYSTEM_HALT") {
+        return SYS_SUB_CMD_SYSTEM_HALT;
+    }
+    if(cmd == "SYS_SUB_CMD_LOCO_EMERGENCY_STOP") {
+        return SYS_SUB_CMD_LOCO_EMERGENCY_STOP;
+    }
+    if(cmd == "SYS_SUB_CMD_LOCO_CYCLE_STOP") {
+        return SYS_SUB_CMD_LOCO_CYCLE_STOP;
+    }
+    //    return         SYS_SUB_CMD_Lok Datenprotokoll
+    if(cmd == "SYS_SUB_CMD_CIRCUIT_TIME_ATTACHMENTS_DECODER") {
+        return SYS_SUB_CMD_CIRCUIT_TIME_ATTACHMENTS_DECODER;
+    }
+    if(cmd == "SYS_SUB_CMD_FAST_READ_MFX") {
+        return SYS_SUB_CMD_FAST_READ_MFX;
+    }
+    //    return         SYS_SUB_CMD_Gleisprotokoll frei schalten
+    //    return         SYS_SUB_CMD_System MFX Neuanmeldezähler s
+    if(cmd == "SYS_SUB_CMD_SYSTEM_OVERLAOD") {
+        return SYS_SUB_CMD_SYSTEM_OVERLAOD;
+    }
+    if(cmd == "SYS_SUB_CMD_SYSTEM_STATUS") {
+        return SYS_SUB_CMD_SYSTEM_STATUS;
+    }
+    if(cmd == "SYS_SUB_CMD_SYSTEM_IDENTIFIER") {
+        return SYS_SUB_CMD_SYSTEM_IDENTIFIER;
+    }
+    if(cmd == "SYS_SUB_CMD_MFX_SEEK") {
+        return SYS_SUB_CMD_MFX_SEEK;
+    }
+    if(cmd == "SYS_SUB_CMD_SYSTEM_RESET") {
+        return SYS_SUB_CMD_SYSTEM_RESET;
+    }
+    throw CanCommandException{"Invalid sub command given"};
+}
 

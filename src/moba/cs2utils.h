@@ -29,6 +29,9 @@
 std::string getCommmandAsString(int cmd);
 std::string getSystemSubCommandAsString(int subCmd);
 
+CanCommand getCommandFromString(const std::string &cmd);
+CanSystemSubCommand getSystemSubCommandFromString(const std::string &cmd);
+
 inline CS2CanCommand setLocSpeed(std::uint32_t localId, std::uint16_t speed) {
     return CS2CanCommand{CanCommand::CMD_LOCO_SPEED, 6, localId, speed};
 }
