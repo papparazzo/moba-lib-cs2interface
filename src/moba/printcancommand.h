@@ -34,7 +34,7 @@ public:
 
     virtual ~PrintCanCommand();
 
-    bool handleCanCommand(const CS2CanCommand &cmd);
+    HandlerReturn handleCanCommand(const CS2CanCommand &cmd);
 
 protected:
     std::set<CanCommand> allowedCommands;

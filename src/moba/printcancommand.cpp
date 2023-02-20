@@ -33,9 +33,9 @@ allowedCommands{allowedCommands}, allowedSubCommands{allowedSubCommands} {
 PrintCanCommand::~PrintCanCommand() {
 }
 
-bool PrintCanCommand::handleCanCommand(const CS2CanCommand &cmd) {
+PrintCanCommand::HandlerReturn PrintCanCommand::handleCanCommand(const CS2CanCommand &cmd) {
     if(!printCommand(cmd)) {
-        return false;
+        return PrintCanCommand::NOT_HANDLED;
     }
 
     printf(
@@ -72,7 +72,7 @@ bool PrintCanCommand::handleCanCommand(const CS2CanCommand &cmd) {
     std::cout << std::endl;
     std::cout << "---------------------------------------------------------------";
     std::cout << std::endl;
-    return true;
+    return PrintCanCommand::HANDLED_AND_FINISHED;
 }
 
 bool PrintCanCommand::printCommand(const CS2CanCommand &cmd) {

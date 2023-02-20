@@ -42,7 +42,7 @@ public:
     virtual ~ConfigReader() noexcept {
     }
 
-    bool handleCanCommand(const CS2CanCommand &cmd);
+    HandlerReturn handleCanCommand(const CS2CanCommand &cmd);
 
     void addHandler(ConfigReaderHandlerPtr handler);
 

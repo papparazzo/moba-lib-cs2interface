@@ -30,9 +30,9 @@ void ConfigReader::addHandler(ConfigReaderHandlerPtr handler) {
     handlers[handler->getName()] = handler;
 }
 
-bool ConfigReader::handleCanCommand(const CS2CanCommand &cmd) {
+ConfigReader::HandlerReturn ConfigReader::handleCanCommand(const CS2CanCommand &cmd) {
     if(cmd.header[1] != static_cast<uint8_t>(CanCommand::CMD_CONFIG_DATA_STREAM)) {
-        return false;
+        return ConfigReader::NOT_HANDLED;
     }
 
     static bool firstByte = false;
@@ -51,7 +51,7 @@ bool ConfigReader::handleCanCommand(const CS2CanCommand &cmd) {
             configData.dataLengthCompressed = cmd.getDoubleWordAt0();
             configData.dataCompressed.clear();
             configData.dataCompressed.reserve(configData.dataLengthCompressed);
-            return true;
+            return ConfigReader::HANDLED_MORE_TO_COME;
 
         case 8:
             if(firstByte) {
@@ -65,8 +65,9 @@ bool ConfigReader::handleCanCommand(const CS2CanCommand &cmd) {
             if(configData.dataCompressed.size() >= configData.dataLengthCompressed) {
                 parsing = false;
                 handleConfigWriter();
+                return ConfigReader::HANDLED_AND_FINISHED;
             }
-            return true;
+            return ConfigReader::HANDLED_MORE_TO_COME;
 
         default:
             throw ConfigReaderException{"invalid data length given"};

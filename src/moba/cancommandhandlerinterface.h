@@ -24,5 +24,11 @@
 
 class CanCommadHandlerInterface {
 public:
-    virtual bool handleCanCommand(const CS2CanCommand &cmd) = 0;
+    enum HandlerReturn {
+        NOT_HANDLED = 0,
+        HANDLED_MORE_TO_COME = 1,
+        HANDLED_AND_FINISHED = 2
+    };
+
+    virtual HandlerReturn handleCanCommand(const CS2CanCommand &cmd) = 0;
 };
