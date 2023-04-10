@@ -23,7 +23,6 @@
 void ConfigLoklistReader::handleConfigData(const std::string &data) {
     locomotives.clear();
 
-
     std::string::size_type p = 0;
     std::string::size_type f = 0;
 
