@@ -43,3 +43,6 @@ public:
 protected:
     std::string getToken(const std::string &t, std::string &v);
 };
+
+using Locomotives = std::map<std::uint32_t, std::shared_ptr<ConfigLoklistReader::Locomotive>>;
+using LocomotivesPtr = std::shared_ptr<Locomotives>;
