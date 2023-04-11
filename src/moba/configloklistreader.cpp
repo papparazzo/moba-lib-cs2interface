@@ -50,7 +50,7 @@ void ConfigLoklistReader::handleConfigData(const std::string &data) {
         } else if(k == " ..nr") {
             n = v;
         } else if(k == " ..typ") {
-            curLoco->functions[std::stoi(v)] = std::stoi(v);
+            curLoco->functions[std::stoi(v)] = std::stoi(n);
         }
     };
 }
