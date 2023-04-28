@@ -30,7 +30,7 @@
 CS2Writer::CS2Writer(): fd_write{-1} {
 }
 
-CS2Writer::~CS2Writer() {
+CS2Writer::~CS2Writer() noexcept {
     if(fd_write != -1) {
         ::close(fd_write);
     }
