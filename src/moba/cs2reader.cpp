@@ -30,7 +30,7 @@
 #include <cerrno>
 #include <cstring>
 
-CS2Reader::~CS2Reader() {
+CS2Reader::~CS2Reader() noexcept {
     if(fd_read != -1) {
         ::close(fd_read);
     }
