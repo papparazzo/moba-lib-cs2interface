@@ -22,18 +22,20 @@
 
 #include "cs2cancommand.h"
 
-#include <boost/noncopyable.hpp>
 #include <string>
 #include <memory>
 #include <mutex>
 
 #include <netinet/ip.h>
 
-class CS2Writer : private boost::noncopyable {
+class CS2Writer {
 public:
     static constexpr int DEFAULT_PORT_WRITE = 15731;
 
     CS2Writer();
+    CS2Writer(const CS2Writer&) = delete;
+    CS2Writer(CS2Writer&&) = delete;
+    CS2Writer& operator=(const CS2Writer&) = delete;
 
     virtual ~CS2Writer() noexcept;
 
