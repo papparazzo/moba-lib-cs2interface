@@ -47,22 +47,22 @@ ConfigReader::HandlerReturn ConfigReader::handleCanCommand(const CS2CanCommand &
         case 7:
             parsing = true;
             firstByte = true;
-            configData.crc = cmd.getWordAt4();
-            configData.dataLengthCompressed = cmd.getDoubleWordAt0();
-            configData.dataCompressed.clear();
-            configData.dataCompressed.reserve(configData.dataLengthCompressed);
+            cfgData.crc = cmd.getWordAt4();
+            cfgData.dataLengthCompressed = cmd.getDoubleWordAt0();
+            cfgData.dataCompressed.clear();
+            cfgData.dataCompressed.reserve(cfgData.dataLengthCompressed);
             return ConfigReader::HANDLED_MORE_TO_COME;
 
         case 8:
             if(firstByte) {
                 firstByte = false;
-                configData.dataLengthDecompresed = cmd.getDoubleWordAt0();
+                cfgData.dataLengthDecompresed = cmd.getDoubleWordAt0();
             }
             for(int i = 0; i < 8; ++i) {
-                configData.dataCompressed.push_back(cmd.data[i]);
+                cfgData.dataCompressed.push_back(cmd.data[i]);
             }
 
-            if(configData.dataCompressed.size() >= configData.dataLengthCompressed) {
+            if(cfgData.dataCompressed.size() >= cfgData.dataLengthCompressed) {
                 parsing = false;
                 handleConfigWriter();
                 return ConfigReader::HANDLED_AND_FINISHED;
@@ -98,7 +98,7 @@ std::uint16_t ConfigReader::getCRC(std::uint8_t *data, std::size_t length) {
 
 void ConfigReader::handleConfigWriter() {
 
-    if(getCRC(&configData.dataCompressed[0], configData.dataCompressed.size()) != configData.crc) {
+    if(getCRC(&cfgData.dataCompressed[0], cfgData.dataCompressed.size()) != cfgData.crc) {
         throw ConfigReaderException{"crc-check failed!"};
     }
     unzipData();
@@ -107,23 +107,23 @@ void ConfigReader::handleConfigWriter() {
 void ConfigReader::unzipData() {
     ZipStream zipStream;
 
-    zipStream.strm.next_in = &configData.dataCompressed[4];
-    zipStream.strm.avail_in = configData.dataCompressed.size() - 4;
+    zipStream.strm.next_in = &cfgData.dataCompressed[4];
+    zipStream.strm.avail_in = cfgData.dataCompressed.size() - 4;
 
     if(zipStream.strm.avail_in == 0) {
         return;
     }
 
-    unsigned char out[configData.dataLengthDecompresed];
+    unsigned char out[cfgData.dataLengthDecompresed];
 
-    zipStream.strm.avail_out = configData.dataLengthDecompresed;
+    zipStream.strm.avail_out = cfgData.dataLengthDecompresed;
     zipStream.strm.next_out = out;
 
     if(inflate(&zipStream.strm, Z_NO_FLUSH) != Z_STREAM_END) {
         throw ConfigReaderException{"decompress of stream failed"};
     }
 
-    auto d = std::string(reinterpret_cast<char*>(out), configData.dataLengthDecompresed);
+    auto d = std::string(reinterpret_cast<char*>(out), cfgData.dataLengthDecompresed);
 
     auto p = d.find(']');
     if(std::string::npos == p) {

@@ -63,7 +63,7 @@ protected:
 
         std::vector<std::uint8_t> dataCompressed;
 
-    } configData;
+    } cfgData;
 
     struct ZipStream {
         ZipStream() {
