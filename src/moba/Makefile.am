@@ -15,4 +15,4 @@ LDFLAGS += -L/usr/local/lib
 CLEANFILES = *~
 
 AM_CPPFLAGS = \
-    -g3 -g -ggdb -O3 -Wall
+    -g3 -g -ggdb -O3 -Wall -std=c++20
