@@ -22,6 +22,9 @@
 
 #include <cstring>
 #include <iostream>
+#if __has_include(<format>)
+#include <format>
+#endif
 
 ConfigReader::ConfigReader() {
 }
@@ -70,7 +73,13 @@ ConfigReader::HandlerReturn ConfigReader::handleCanCommand(const CS2CanCommand &
             return ConfigReader::HANDLED_MORE_TO_COME;
 
         default:
+#ifdef __cpp_lib_format
+            throw ConfigReaderException{
+                std::format("invalid data length <{}> given", cmd.len)
+            };
+#else
             throw ConfigReaderException{"invalid data length given"};
+#endif
     }
 }
 
