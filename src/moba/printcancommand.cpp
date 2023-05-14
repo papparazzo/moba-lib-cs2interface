@@ -30,9 +30,6 @@ PrintCanCommand::PrintCanCommand(const std::set<CanCommand> &allowedCommands, co
 allowedCommands{allowedCommands}, allowedSubCommands{allowedSubCommands} {
 }
 
-PrintCanCommand::~PrintCanCommand() {
-}
-
 PrintCanCommand::HandlerReturn PrintCanCommand::handleCanCommand(const CS2CanCommand &cmd) {
     if(!printCommand(cmd)) {
         return PrintCanCommand::NOT_HANDLED;

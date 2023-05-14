@@ -32,7 +32,7 @@ public:
 
     PrintCanCommand(const std::set<CanCommand> &allowedCommands, const std::set<CanSystemSubCommand> &allowedSubCommands);
 
-    virtual ~PrintCanCommand() noexcept;
+    virtual ~PrintCanCommand() noexcept = default;
 
     HandlerReturn handleCanCommand(const CS2CanCommand &cmd);
 
