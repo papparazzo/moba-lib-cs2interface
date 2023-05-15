@@ -22,20 +22,18 @@
 
 #include <exception>
 
-class CS2ConnectorException : public std::exception {
+class CS2ConnectorException: public std::exception {
 
-    public:
-        virtual ~CS2ConnectorException() noexcept {
-        }
+    std::string what__;
+    
+public:
+    virtual ~CS2ConnectorException() noexcept = default;
 
-        CS2ConnectorException(const std::string &what) {
-            what__ = what;
-        }
+    CS2ConnectorException(const std::string &what) {
+        what__ = what;
+    }
 
-        virtual const char* what() const noexcept {
-            return what__.c_str();
-        }
-
-    private:
-        std::string what__;
+    virtual const char* what() const noexcept {
+        return what__.c_str();
+    }
 };

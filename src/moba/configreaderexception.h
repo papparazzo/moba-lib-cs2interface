@@ -24,9 +24,11 @@
 #include <string>
 
 class ConfigReaderException: public std::exception {
+
+    std::string what__;
+    
 public:
-    virtual ~ConfigReaderException() noexcept {
-    }
+    virtual ~ConfigReaderException() noexcept = default;
 
     ConfigReaderException(const std::string &what) {
         this->what__ = what;
@@ -35,7 +37,4 @@ public:
     virtual const char* what() const noexcept {
         return this->what__.c_str();
     }
-
-private:
-    std::string what__;
 };
