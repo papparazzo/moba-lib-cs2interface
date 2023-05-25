@@ -39,8 +39,7 @@ public:
 
     ConfigReader(const ConfigReader& orig) = delete;
 
-    virtual ~ConfigReader() noexcept {
-    }
+    virtual ~ConfigReader() noexcept = default;
 
     HandlerReturn handleCanCommand(const CS2CanCommand &cmd);
 
@@ -83,4 +82,3 @@ protected:
         z_stream strm;
     };
 };
-

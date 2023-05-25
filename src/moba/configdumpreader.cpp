@@ -25,10 +25,7 @@
 ConfigDumpReader::ConfigDumpReader(const std::string &name): name{name} {
 }
 
-ConfigDumpReader::~ConfigDumpReader() {
-}
-
-std::string ConfigDumpReader::getName() {
+std::string ConfigDumpReader::getName() const {
     return name;
 }
 

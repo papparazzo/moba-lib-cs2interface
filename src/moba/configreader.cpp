@@ -73,6 +73,7 @@ ConfigReader::HandlerReturn ConfigReader::handleCanCommand(const CS2CanCommand &
             return ConfigReader::HANDLED_MORE_TO_COME;
 
         default:
+// FIXME make this possible
 #ifdef __cpp_lib_format
             throw ConfigReaderException{
                 std::format("invalid data length <{}> given", cmd.len)

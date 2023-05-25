@@ -25,15 +25,14 @@
 #include <string>
 
 class ConfigDumpReader: public ConfigReaderHandlerInterface {
+
+    std::string name;
+
 public:
     ConfigDumpReader(const std::string &name);
-    virtual ~ConfigDumpReader();
+    virtual ~ConfigDumpReader() noexcept = default;
 
-    std::string getName();
+    std::string getName() const;
 
     virtual void handleConfigData(const std::string &data);
-
-private:
-    std::string name;
 };
-
