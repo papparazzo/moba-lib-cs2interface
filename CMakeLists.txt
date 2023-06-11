@@ -8,8 +8,9 @@ set(CMAKE_CXX_COMPILER "/usr/bin/clang++")
 
 configure_file(config.h.in config.h)
 
+include(GNUInstallDirs)
 add_library(
-    moba-cs2interface
+    moba-cs2interface SHARED 
 
     src/moba/printcancommand.cpp
     src/moba/configloklistreader.cpp
