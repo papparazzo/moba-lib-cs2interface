@@ -10,7 +10,7 @@ configure_file(config.h.in config.h)
 
 include(GNUInstallDirs)
 add_library(
-    moba-cs2interface SHARED 
+    moba-cs2interface STATIC 
 
     src/moba/printcancommand.cpp
     src/moba/configloklistreader.cpp
