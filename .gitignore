@@ -53,7 +53,7 @@ core
 .deps/
 .dirstamp
 
-*.o     
+*.o
 *~
 !.gitkeep
 
