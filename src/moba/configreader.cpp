@@ -20,8 +20,6 @@
 
 #include "configreader.h"
 
-#include <cstring>
-#include <iostream>
 #if __has_include(<format>)
 #include <format>
 #endif

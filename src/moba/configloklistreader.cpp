@@ -24,7 +24,7 @@ void ConfigLoklistReader::handleConfigData(const std::string &data) {
     locomotives.clear();
 
     std::string::size_type p = 0;
-    std::string::size_type f = 0;
+    std::string::size_type f;
 
     std::string n;
     std::string v;
@@ -52,7 +52,7 @@ void ConfigLoklistReader::handleConfigData(const std::string &data) {
         } else if(k == " ..typ") {
             curLoco->functions[std::stoi(v)] = std::stoi(n);
         }
-    };
+    }
 }
 
 std::string ConfigLoklistReader::getToken(const std::string &t, std::string &v) {

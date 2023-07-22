@@ -22,13 +22,10 @@
 #include "cs2shared.h"
 
 #include <arpa/inet.h>
-#include <stdio.h>
-#include <sys/types.h>
 #include <unistd.h>
 #include <cstring>
 
 #include <cerrno>
-#include <cstring>
 
 CS2Reader::~CS2Reader() noexcept {
     if(fd_read != -1) {
