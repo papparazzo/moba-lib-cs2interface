@@ -22,7 +22,7 @@
 
 #include "cs2cancommand.h"
 
-class CanCommadHandlerInterface {
+class CanCommandHandlerInterface {
 public:
     enum HandlerReturn {
         NOT_HANDLED = 0,

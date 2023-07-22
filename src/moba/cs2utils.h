@@ -26,7 +26,7 @@
 
 #include "cs2cancommand.h"
 
-std::string getCommmandAsString(int cmd);
+std::string getCommandAsString(int cmd);
 std::string getSystemSubCommandAsString(int subCmd);
 
 CanCommand getCommandFromString(const std::string &cmd);

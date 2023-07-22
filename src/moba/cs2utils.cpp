@@ -22,9 +22,7 @@
 #include "cs2cancommand.h"
 #include "cancommandexception.h"
 
-#include <string>
-
-std::string getCommmandAsString(int cmd) {
+std::string getCommandAsString(int cmd) {
     switch(cmd) {
         case CMD_SYSTEM:
             return "CMD_SYSTEM";
