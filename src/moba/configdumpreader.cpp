@@ -1,5 +1,5 @@
 /*
- *  Project:    moba-sniffer
+ *  Project:    moba-lib-cs2interface
  *
  *  Copyright (C) 2022 Stefan Paproth <pappi-@gmx.de>
  *
