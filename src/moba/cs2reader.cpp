@@ -34,7 +34,7 @@ CS2Reader::~CS2Reader() noexcept {
 }
 
 void CS2Reader::connect(int port) {
-    struct sockaddr_in s_addr_read;
+    struct sockaddr_in s_addr_read{};
 
     if((fd_read = ::socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) == -1) {
         throw CS2ConnectorException{"socket-creation for reading failed"};
@@ -53,7 +53,7 @@ void CS2Reader::connect(int port) {
 CS2CanCommand CS2Reader::read() const {
     CS2CanCommand data;
 
-    struct sockaddr_in s_addr_other;
+    struct sockaddr_in s_addr_other{};
     socklen_t slen = sizeof(s_addr_other);
 
     // Try again on interrupted function call

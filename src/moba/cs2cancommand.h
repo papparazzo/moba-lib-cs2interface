@@ -169,10 +169,10 @@ struct CS2CanCommand {
         return getWord(6);
     }
 
-    std::uint8_t header[2];
-    std::uint8_t hash[2];
-    std::uint8_t len;
-    std::uint8_t data[8];
+    std::uint8_t header[2]{};
+    std::uint8_t hash[2]{};
+    std::uint8_t len{};
+    std::uint8_t data[8]{};
 
 private:
     void setHeader(CanCommand cmd, std::uint8_t length = 0x00) {

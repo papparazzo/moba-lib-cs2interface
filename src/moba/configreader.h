@@ -79,6 +79,6 @@ protected:
         virtual ~ZipStream() {
             inflateEnd(&strm);
         }
-        z_stream strm;
+        z_stream strm{};
     };
 };

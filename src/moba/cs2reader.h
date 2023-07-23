@@ -39,7 +39,7 @@ public:
     [[nodiscard]] auto read() const -> CS2CanCommand;
 
 protected:
-    int fd_read;
+    int fd_read{-1};
 };
 
 using CS2ReaderPtr = std::shared_ptr<CS2Reader>;
