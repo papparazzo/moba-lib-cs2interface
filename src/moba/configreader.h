@@ -32,7 +32,7 @@
 #include <functional>
 #include <map>
 
-class ConfigReader: public CanCommadHandlerInterface {
+class ConfigReader: public CanCommandHandlerInterface {
 public:
 
     ConfigReader();

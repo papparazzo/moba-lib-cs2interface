@@ -24,7 +24,7 @@
 #include "cs2cancommand.h"
 #include <set>
 
-class PrintCanCommand: public CanCommadHandlerInterface {
+class PrintCanCommand: public CanCommandHandlerInterface {
 public:
     PrintCanCommand() = default;
 

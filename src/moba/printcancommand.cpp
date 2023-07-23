@@ -60,7 +60,7 @@ PrintCanCommand::HandlerReturn PrintCanCommand::handleCanCommand(const CS2CanCom
 
     std::uint8_t head = cmd.header[1] & ~0x01;
 
-    std::cout << (response ? "[R] " : "[ ] ") << getCommmandAsString(head);
+    std::cout << (response ? "[R] " : "[ ] ") << getCommandAsString(head);
 
     if(head == CMD_SYSTEM) {
         std::cout << " - " << getSystemSubCommandAsString(cmd.data[4]);
