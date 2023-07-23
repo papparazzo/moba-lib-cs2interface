@@ -32,7 +32,7 @@ public:
     ConfigDumpReader(const std::string &name);
     virtual ~ConfigDumpReader() noexcept = default;
 
-    std::string getName() const;
+    [[nodiscard]] std::string getName() const override;
 
     virtual void handleConfigData(const std::string &data);
 };

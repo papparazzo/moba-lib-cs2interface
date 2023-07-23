@@ -26,7 +26,7 @@
 class ConfigReaderHandlerInterface {
 public:
     virtual void handleConfigData(const std::string &data) = 0;
-    virtual std::string getName() const = 0;
+    [[nodiscard]] virtual std::string getName() const = 0;
 };
 
 using ConfigReaderHandlerPtr = std::shared_ptr<ConfigReaderHandlerInterface>;

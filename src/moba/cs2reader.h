@@ -36,7 +36,7 @@ public:
     CS2Reader& operator=(const CS2Reader&) = delete;
 
     void connect(int port = CS2Reader::DEFAULT_PORT_READ);
-    auto read() const -> CS2CanCommand;
+    [[nodiscard]] auto read() const -> CS2CanCommand;
 
 protected:
     int fd_read;

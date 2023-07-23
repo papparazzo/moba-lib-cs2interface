@@ -131,41 +131,41 @@ struct CS2CanCommand {
         memcpy(&data[5], &dataWord1, 2);
     }
 
-    std::uint32_t getUID() const {
+    [[nodiscard]] std::uint32_t getUID() const {
         return getDoubleWordAt0();
     }
 
-    std::uint32_t getDoubleWordAt0() const {
+    [[nodiscard]] std::uint32_t getDoubleWordAt0() const {
         return getDoubleWord(0);
     }
 
-    std::uint32_t getDoubleWordAt4() const {
+    [[nodiscard]] std::uint32_t getDoubleWordAt4() const {
         return getDoubleWord(4);
     }
 
-    std::uint64_t getLongWord() const {
+    [[nodiscard]] std::uint64_t getLongWord() const {
         std::uint64_t word;
         std::memcpy(&word, data, 8);
         return word;
     }
 
-    std::uint16_t getWordAt0() const {
+    [[nodiscard]] std::uint16_t getWordAt0() const {
         return getWord(0);
     }
 
-    std::uint16_t getWordAt2() const {
+    [[nodiscard]] std::uint16_t getWordAt2() const {
         return getWord(2);
     }
 
-    std::uint16_t getWordAt4() const {
+    [[nodiscard]] std::uint16_t getWordAt4() const {
         return getWord(4);
     }
 
-    std::uint16_t getWordAt5() const {
+    [[nodiscard]] std::uint16_t getWordAt5() const {
         return getWord(5);
     }
 
-    std::uint16_t getWordAt6() const {
+    [[nodiscard]] std::uint16_t getWordAt6() const {
         return getWord(6);
     }
 
@@ -183,13 +183,13 @@ private:
         len = length;
     }
 
-    std::uint16_t getWord(int pos) const {
+    [[nodiscard]] std::uint16_t getWord(int pos) const {
         std::uint16_t data16;
         std::memcpy(&data16, &data[pos], 2);
         return ntohs(data16);
     }
 
-    std::uint32_t getDoubleWord(int pos) const {
+    [[nodiscard]] std::uint32_t getDoubleWord(int pos) const {
         std::uint32_t data32;
         std::memcpy(&data32, &data[pos], 4);
         return ntohl(data32);
