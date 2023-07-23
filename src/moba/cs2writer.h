@@ -32,7 +32,7 @@ class CS2Writer {
 public:
     static constexpr int DEFAULT_PORT_WRITE = 15731;
 
-    CS2Writer();
+    CS2Writer() = default;
     CS2Writer(const CS2Writer&) = delete;
     CS2Writer(CS2Writer&&) = delete;
     CS2Writer& operator=(const CS2Writer&) = delete;
@@ -43,8 +43,8 @@ public:
     void send(const CS2CanCommand &data);
 
 protected:
-    struct sockaddr_in s_addr_write;
-    int fd_write;
+    struct sockaddr_in s_addr_write{};
+    int fd_write{-1};
     std::mutex m;
 };
 
