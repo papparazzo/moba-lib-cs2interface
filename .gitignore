@@ -56,6 +56,9 @@ core
 !.gitkeep
 
 # cmake
+build.ninja
+.ninja_*
+.cmake
 cmake-build-debug
 CMakeLists.txt.user
 CMakeCache.txt
