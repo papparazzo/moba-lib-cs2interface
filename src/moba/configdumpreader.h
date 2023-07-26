@@ -29,10 +29,10 @@ class ConfigDumpReader: public ConfigReaderHandlerInterface {
     std::string name;
 
 public:
-    ConfigDumpReader(const std::string &name);
+    explicit ConfigDumpReader(std::string name);
     virtual ~ConfigDumpReader() noexcept = default;
 
     [[nodiscard]] std::string getName() const override;
 
-    virtual void handleConfigData(const std::string &data);
+    void handleConfigData(const std::string &data) override;
 };

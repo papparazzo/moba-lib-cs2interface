@@ -25,16 +25,16 @@
 
 class CanCommandException: public std::exception {
     
-    std::string what__;
+    std::string what_;
     
 public:
-    virtual ~CanCommandException() noexcept = default;
+    ~CanCommandException() noexcept override = default;
 
-    CanCommandException(const std::string &what) {
-        this->what__ = what;
+    explicit CanCommandException(const std::string &what) {
+        this->what_ = what;
     }
 
-    virtual const char* what() const noexcept {
-        return this->what__.c_str();
+    [[nodiscard]] const char* what() const noexcept override {
+        return this->what_.c_str();
     }
 };

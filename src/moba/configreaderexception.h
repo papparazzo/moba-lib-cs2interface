@@ -25,16 +25,16 @@
 
 class ConfigReaderException: public std::exception {
 
-    std::string what__;
+    std::string what_;
     
 public:
-    virtual ~ConfigReaderException() noexcept = default;
+    ~ConfigReaderException() noexcept override = default;
 
-    ConfigReaderException(const std::string &what) {
-        this->what__ = what;
+    explicit ConfigReaderException(const std::string &what) {
+        this->what_ = what;
     }
 
-    virtual const char* what() const noexcept {
-        return this->what__.c_str();
+    [[nodiscard]] const char* what() const noexcept override {
+        return this->what_.c_str();
     }
 };

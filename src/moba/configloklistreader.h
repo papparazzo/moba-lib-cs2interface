@@ -38,7 +38,7 @@ public:
         return "lokomotive";
     }
 
-    virtual void handleConfigData(const std::string &data);
+    void handleConfigData(const std::string &data) override;
 
 protected:
     std::string getToken(const std::string &t, std::string &v);

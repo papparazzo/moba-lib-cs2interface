@@ -24,10 +24,7 @@
 #include <format>
 #endif
 
-ConfigReader::ConfigReader() {
-}
-
-void ConfigReader::addHandler(ConfigReaderHandlerPtr handler) {
+void ConfigReader::addHandler(const ConfigReaderHandlerPtr& handler) {
     handlers[handler->getName()] = handler;
 }
 
@@ -59,8 +56,8 @@ ConfigReader::HandlerReturn ConfigReader::handleCanCommand(const CS2CanCommand &
                 firstByte = false;
                 cfgData.dataLengthDecompresed = cmd.getDoubleWordAt0();
             }
-            for(int i = 0; i < 8; ++i) {
-                cfgData.dataCompressed.push_back(cmd.data[i]);
+            for(unsigned char i : cmd.data) {
+                cfgData.dataCompressed.push_back(i);
             }
 
             if(cfgData.dataCompressed.size() >= cfgData.dataLengthCompressed) {

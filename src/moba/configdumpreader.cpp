@@ -21,8 +21,9 @@
 #include "configdumpreader.h"
 
 #include <iostream>
+#include <utility>
 
-ConfigDumpReader::ConfigDumpReader(const std::string &name): name{name} {
+ConfigDumpReader::ConfigDumpReader(std::string name): name{std::move(name)} {
 }
 
 std::string ConfigDumpReader::getName() const {

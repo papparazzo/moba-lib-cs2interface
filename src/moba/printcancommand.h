@@ -28,13 +28,13 @@ class PrintCanCommand: public CanCommandHandlerInterface {
 public:
     PrintCanCommand() = default;
 
-    PrintCanCommand(const std::set<CanCommand> &allowedCommands);
+    explicit PrintCanCommand(const std::set<CanCommand> &allowedCommands);
 
     PrintCanCommand(const std::set<CanCommand> &allowedCommands, const std::set<CanSystemSubCommand> &allowedSubCommands);
 
     virtual ~PrintCanCommand() noexcept = default;
 
-    HandlerReturn handleCanCommand(const CS2CanCommand &cmd);
+    HandlerReturn handleCanCommand(const CS2CanCommand &cmd) override;
 
 protected:
     std::set<CanCommand> allowedCommands;
