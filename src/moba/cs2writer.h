@@ -28,7 +28,7 @@
 
 #include <netinet/ip.h>
 
-class CS2Writer {
+class CS2Writer final {
 public:
     static constexpr int DEFAULT_PORT_WRITE = 15731;
 
@@ -37,13 +37,13 @@ public:
     CS2Writer(CS2Writer&&) = delete;
     CS2Writer& operator=(const CS2Writer&) = delete;
 
-    virtual ~CS2Writer() noexcept;
+    ~CS2Writer() noexcept;
 
-    void connect(const std::string &host, int port = CS2Writer::DEFAULT_PORT_WRITE);
+    void connect(const std::string &host, int port = DEFAULT_PORT_WRITE);
     void send(const CS2CanCommand &data);
 
 protected:
-    struct sockaddr_in s_addr_write{};
+    sockaddr_in s_addr_write{};
     int fd_write{-1};
     std::mutex m;
 };
