@@ -25,17 +25,18 @@
 #include <string>
 #include <memory>
 
-class CS2Reader {
+class CS2Reader final {
 public:
     static constexpr int DEFAULT_PORT_READ = 15730;
-    virtual ~CS2Reader() noexcept;
+
+    ~CS2Reader() noexcept;
 
     CS2Reader() = default;
 
     CS2Reader(const CS2Reader&) = delete;
     CS2Reader& operator=(const CS2Reader&) = delete;
 
-    void connect(int port = CS2Reader::DEFAULT_PORT_READ);
+    void connect(int port = DEFAULT_PORT_READ);
     [[nodiscard]] auto read() const -> CS2CanCommand;
 
 protected:
