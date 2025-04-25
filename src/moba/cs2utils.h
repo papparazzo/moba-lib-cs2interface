@@ -32,48 +32,48 @@ std::string getSystemSubCommandAsString(int subCmd);
 CanCommand getCommandFromString(const std::string &cmd);
 CanSystemSubCommand getSystemSubCommandFromString(const std::string &cmd);
 
-inline CS2CanCommand setLocSpeed(std::uint32_t localId, std::uint16_t speed) {
-    return CS2CanCommand{CanCommand::CMD_LOCO_SPEED, 6, localId, speed};
+inline CS2CanCommand setLocSpeed(const std::uint32_t localId, const std::uint16_t speed) {
+    return CS2CanCommand{CMD_LOCO_SPEED, 6, localId, speed};
 }
 
-inline CS2CanCommand setLocFunction(std::uint32_t localId, std::uint8_t function, bool on) {
-    return CS2CanCommand{CanCommand::CMD_LOCO_FUNCTION, 6, localId, function, static_cast<std::uint8_t>(on ? 1 : 0)};
+inline CS2CanCommand setLocFunction(const std::uint32_t localId, const std::uint8_t function, const bool on) {
+    return CS2CanCommand{CMD_LOCO_FUNCTION, 6, localId, function, static_cast<std::uint8_t>(on ? 1 : 0)};
 }
 
-inline CS2CanCommand setLocDirection(std::uint32_t localId, std::uint8_t direction) {
-    return CS2CanCommand{CanCommand::CMD_LOCO_DIRECTION, 5, localId, direction};
+inline CS2CanCommand setLocDirection(const std::uint32_t localId, const std::uint8_t direction) {
+    return CS2CanCommand{CMD_LOCO_DIRECTION, 5, localId, direction};
 }
 
-inline CS2CanCommand setSwitch(std::uint32_t localId, bool r, bool on) {
-    return CS2CanCommand{CanCommand::CMD_SET_SWITCH, 6, localId, static_cast<std::uint8_t>(r ? 0 : 1), static_cast<std::uint8_t>(on ? 0 : 1)};
+inline CS2CanCommand setSwitch(const std::uint32_t localId, const bool r, const bool on) {
+    return CS2CanCommand{CMD_SET_SWITCH, 6, localId, static_cast<std::uint8_t>(r ? 0 : 1), static_cast<std::uint8_t>(on ? 0 : 1)};
 }
 
-inline CS2CanCommand setLocoHalt(std::uint32_t localId) {
-    return CS2CanCommand{CanCommand::CMD_SYSTEM, 5, localId, static_cast<std::uint8_t>(CanSystemSubCommand::SYS_SUB_CMD_LOCO_EMERGENCY_STOP)};
+inline CS2CanCommand setLocoHalt(const std::uint32_t localId) {
+    return CS2CanCommand{CMD_SYSTEM, 5, localId, static_cast<std::uint8_t>(SYS_SUB_CMD_LOCO_EMERGENCY_STOP)};
 }
 
 inline CS2CanCommand setEmergencyStop() {
-    return CS2CanCommand{CanCommand::CMD_SYSTEM, 5, static_cast<std::uint32_t>(0x0), static_cast<std::uint8_t>(CanSystemSubCommand::SYS_SUB_CMD_SYSTEM_STOP)};
+    return CS2CanCommand{CMD_SYSTEM, 5, static_cast<std::uint32_t>(0x0), static_cast<std::uint8_t>(SYS_SUB_CMD_SYSTEM_STOP)};
 }
 
 inline CS2CanCommand setEmergencyStopClearing() {
-    return CS2CanCommand{CanCommand::CMD_SYSTEM, 5, static_cast<std::uint32_t>(0x0), static_cast<std::uint8_t>(CanSystemSubCommand::SYS_SUB_CMD_SYSTEM_GO)};
+    return CS2CanCommand{CMD_SYSTEM, 5, static_cast<std::uint32_t>(0x0), static_cast<std::uint8_t>(SYS_SUB_CMD_SYSTEM_GO)};
 }
 
 inline CS2CanCommand setHalt() {
-    return CS2CanCommand{CanCommand::CMD_SYSTEM, 5, static_cast<std::uint32_t>(0x0), static_cast<std::uint8_t>(CanSystemSubCommand::SYS_SUB_CMD_SYSTEM_HALT)};
+    return CS2CanCommand{CMD_SYSTEM, 5, static_cast<std::uint32_t>(0x0), static_cast<std::uint8_t>(SYS_SUB_CMD_SYSTEM_HALT)};
 }
 
 inline CS2CanCommand ping() {
-    return CS2CanCommand{CanCommand::CMD_PING};
+    return CS2CanCommand{CMD_PING};
 }
 
 inline CS2CanCommand getConfigData(const char *filename) {
     CS2CanCommand cmd;
     unsigned char data[] = {0x00, 0x40, 0x03, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
-    std::size_t maxLength = 8;
+    constexpr std::size_t maxLength = 8;
     memcpy(&data[5], filename, std::min(strlen(filename), maxLength));
-    memcpy((void*)&cmd, data, 13);
+    memcpy(&cmd, data, 13);
     return cmd;
 }
 
@@ -93,14 +93,14 @@ inline CS2CanCommand getMagStat() {
     return getConfigData("magstat");
 }
 
-inline std::uint32_t convertMMToLocId(std::uint8_t addr) {
+inline std::uint32_t convertMMToLocId(const std::uint8_t addr) {
     return 12288 + addr - 1;
 }
 
-inline CanCommand operator |(CanCommand a, CanCommand b) {
+inline CanCommand operator |(const CanCommand a, const CanCommand b) {
     return static_cast<CanCommand>(static_cast<int>(a) | static_cast<int>(b));
 }
 
-inline CanCommand operator |(CanCommand a, int b) {
+inline CanCommand operator |(const CanCommand a, const int b) {
     return static_cast<CanCommand>(static_cast<int>(a) | b);
 }
