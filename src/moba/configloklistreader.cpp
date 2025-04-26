@@ -56,7 +56,7 @@ void ConfigLoklistReader::handleConfigData(const std::string &data) {
 }
 
 std::string ConfigLoklistReader::getToken(const std::string &t, std::string &v) {
-    auto p = t.find('=');
+    const auto p = t.find('=');
 
     if(p == std::string::npos) {
         v = "";

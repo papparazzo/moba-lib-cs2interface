@@ -48,8 +48,9 @@ public:
 protected:
     void handleConfigWriter();
 
-    std::uint16_t updateCRC(std::uint16_t crc, std::uint8_t input);
-    std::uint16_t getCRC(std::uint8_t *data, std::size_t length);
+    static std::uint16_t updateCRC(std::uint16_t crc, std::uint8_t input);
+
+    static std::uint16_t getCRC(const std::uint8_t *data, std::size_t length);
 
     void unzipData();
 

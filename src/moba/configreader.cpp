@@ -92,7 +92,7 @@ std::uint16_t ConfigReader::updateCRC(std::uint16_t crc, std::uint8_t input) {
     return crc;
 }
 
-std::uint16_t ConfigReader::getCRC(std::uint8_t *data, std::size_t length) {
+std::uint16_t ConfigReader::getCRC(const std::uint8_t *data, const std::size_t length) {
     std::uint16_t crc = 0xFFFF;
 
     for(size_t count = 0; count < length; ++count) {
@@ -128,15 +128,15 @@ void ConfigReader::unzipData() {
         throw ConfigReaderException{"decompress of stream failed"};
     }
 
-    auto d = std::string(reinterpret_cast<char*>(out), cfgData.dataLengthDecompresed);
+    const auto d = std::string(reinterpret_cast<char*>(out), cfgData.dataLengthDecompresed);
 
-    auto p = d.find(']');
+    const auto p = d.find(']');
     if(std::string::npos == p) {
         throw ConfigReaderException{"missing ']' in stream"};
     }
 
-    auto k = d.substr(1, p - 1);
-    auto iter = handlers.find(k);
+    const auto k = d.substr(1, p - 1);
+    const auto iter = handlers.find(k);
 
     if(handlers.end() == iter) {
         return;

@@ -69,14 +69,21 @@ enum CanSystemSubCommand {
 };
 
 struct CS2CanCommand {
-    CS2CanCommand(CanCommand cmd = CanCommand::CMD_SYSTEM) {
+    explicit CS2CanCommand(const CanCommand cmd = CMD_SYSTEM) {
         setHeader(cmd);
     }
 
     CS2CanCommand(
-        CanCommand cmd, std::uint8_t length, std::uint8_t data0, std::uint8_t data1 = 0x00, std::uint8_t data2 = 0x00,
-        std::uint8_t data3 = 0x00, std::uint8_t data4 = 0x00, std::uint8_t data5 = 0x00, std::uint8_t data6 = 0x00,
-        std::uint8_t data7 = 0x00
+        const CanCommand cmd,
+        const std::uint8_t length,
+        const std::uint8_t data0,
+        const std::uint8_t data1 = 0x00,
+        const std::uint8_t data2 = 0x00,
+        const std::uint8_t data3 = 0x00,
+        const std::uint8_t data4 = 0x00,
+        const std::uint8_t data5 = 0x00,
+        const std::uint8_t data6 = 0x00,
+        const std::uint8_t data7 = 0x00
     ) {
         setHeader(cmd, length);
 
@@ -92,12 +99,17 @@ struct CS2CanCommand {
     }
 
     CS2CanCommand(
-        CanCommand cmd, std::uint8_t length, std::uint32_t uident, std::uint16_t dataWord, std::uint8_t data2 = 0x00, std::uint8_t data3 = 0x00
+        const CanCommand cmd,
+        const std::uint8_t length,
+        std::uint32_t ident,
+        std::uint16_t dataWord,
+        const std::uint8_t data2 = 0x00,
+        const std::uint8_t data3 = 0x00
     ) {
         setHeader(cmd, length);
 
-        uident = htonl(uident);
-        memcpy(data, &uident, 4);
+        ident = htonl(ident);
+        memcpy(data, &ident, 4);
 
         dataWord = htons(dataWord);
         memcpy(&data[4], &dataWord, 2);
@@ -107,12 +119,16 @@ struct CS2CanCommand {
     }
 
     CS2CanCommand(
-        CanCommand cmd, std::uint8_t length, std::uint32_t uident,
-        std::uint8_t data4, std::uint8_t data5 = 0x00, std::uint8_t data6 = 0x00, std::uint8_t data7 = 0x00
+        const CanCommand cmd, const std::uint8_t length,
+        std::uint32_t ident,
+        const std::uint8_t data4,
+        const std::uint8_t data5 = 0x00,
+        const std::uint8_t data6 = 0x00,
+        const std::uint8_t data7 = 0x00
     ) {
         setHeader(cmd, length);
-        uident = htonl(uident);
-        memcpy(data, &uident, 4);
+        ident = htonl(ident);
+        memcpy(data, &ident, 4);
 
         data[4] = data4;
         data[5] = data5;
@@ -120,10 +136,16 @@ struct CS2CanCommand {
         data[7] = data7;
     }
 
-    CS2CanCommand(CanCommand cmd, std::uint8_t length, std::uint32_t uident, std::uint8_t data0, std::uint16_t dataWord1) {
+    CS2CanCommand(
+        const CanCommand cmd,
+        const std::uint8_t length,
+        std::uint32_t ident,
+        const std::uint8_t data0,
+        std::uint16_t dataWord1
+    ) {
         setHeader(cmd, length);
-        uident = htonl(uident);
-        memcpy(data, &uident, 4);
+        ident = htonl(ident);
+        memcpy(data, &ident, 4);
 
         data[4] = data0;
 
@@ -175,7 +197,7 @@ struct CS2CanCommand {
     std::uint8_t data[8]{};
 
 private:
-    void setHeader(CanCommand cmd, std::uint8_t length = 0x00) {
+    void setHeader(const CanCommand cmd, const std::uint8_t length = 0x00) {
         header[0] = 0x00;
         header[1] = static_cast<std::uint8_t>(cmd);
         hash[0] = 0x03;
@@ -183,13 +205,13 @@ private:
         len = length;
     }
 
-    [[nodiscard]] std::uint16_t getWord(int pos) const {
+    [[nodiscard]] std::uint16_t getWord(const int pos) const {
         std::uint16_t data16;
         std::memcpy(&data16, &data[pos], 2);
         return ntohs(data16);
     }
 
-    [[nodiscard]] std::uint32_t getDoubleWord(int pos) const {
+    [[nodiscard]] std::uint32_t getDoubleWord(const int pos) const {
         std::uint32_t data32;
         std::memcpy(&data32, &data[pos], 4);
         return ntohl(data32);
