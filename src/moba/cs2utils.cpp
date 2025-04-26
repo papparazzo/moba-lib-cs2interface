@@ -14,7 +14,7 @@
  *  GNU Affero General Public License for more details.
  *
  *  You should have received a copy of the GNU Affero General Public License
- *  along with this program. If not, see <http://www.gnu.org/licenses/agpl.txt>.
+ *  along with this program. If not, see <https://www.gnu.org/licenses/agpl.txt>.
  *
  */
 
@@ -107,7 +107,7 @@ std::string getSystemSubCommandAsString(const int subCmd) {
             return "SYS_SUB_CMD_SYSTEM_GO";
 
         case SYS_SUB_CMD_SYSTEM_HALT:
-            return "SYS_SUB_CMD_SSYSTEM_HALT";
+            return "SYS_SUB_CMD_SYSTEM_HALT";
 
         case SYS_SUB_CMD_LOCO_EMERGENCY_STOP:
             return "SYS_SUB_CMD_LOCO_EMERGENCY_STOP";
@@ -115,18 +115,18 @@ std::string getSystemSubCommandAsString(const int subCmd) {
         case SYS_SUB_CMD_LOCO_CYCLE_STOP:
             return "SYS_SUB_CMD_LOCO_CYCLE_STOP";
 
-        //case         SYS_SUB_CMD_Lok Datenprotokoll
+        //case SYS_SUB_CMD_Lok Datenprotokoll
         case SYS_SUB_CMD_CIRCUIT_TIME_ATTACHMENTS_DECODER:
             return "SYS_SUB_CMD_CIRCUIT_TIME_ATTACHMENTS_DECODER";
 
         case SYS_SUB_CMD_FAST_READ_MFX:
             return "SYS_SUB_CMD_FAST_READ_MFX";
 
-        //case         SYS_SUB_CMD_Gleisprotokoll frei schalten
-        //case         SYS_SUB_CMD_System MFX Neuanmeldezähler s
+        //case SYS_SUB_CMD_Gleisprotokoll frei schalten
+        //case SYS_SUB_CMD_System MFX Neuanmeldezähler s
 
-        case SYS_SUB_CMD_SYSTEM_OVERLAOD:
-            return "SYS_SUB_CMD_SYSTEM_OVERLAOD";
+        case SYS_SUB_CMD_SYSTEM_OVERLOAD:
+            return "SYS_SUB_CMD_SYSTEM_OVERLOAD";
 
         case SYS_SUB_CMD_SYSTEM_STATUS:
             return "SYS_SUB_CMD_SYSTEM_STATUS";
@@ -225,7 +225,7 @@ CanSystemSubCommand getSystemSubCommandFromString(const std::string &cmd) {
     if(cmd == "SYS_SUB_CMD_SYSTEM_GO") {
         return SYS_SUB_CMD_SYSTEM_GO;
     }
-    if(cmd == "SYS_SUB_CMD_SSYSTEM_HALT") {
+    if(cmd == "SYS_SUB_CMD_SYSTEM_HALT") {
         return SYS_SUB_CMD_SYSTEM_HALT;
     }
     if(cmd == "SYS_SUB_CMD_LOCO_EMERGENCY_STOP") {
@@ -243,8 +243,8 @@ CanSystemSubCommand getSystemSubCommandFromString(const std::string &cmd) {
     }
     //    return         SYS_SUB_CMD_Gleisprotokoll frei schalten
     //    return         SYS_SUB_CMD_System MFX Neuanmeldezähler s
-    if(cmd == "SYS_SUB_CMD_SYSTEM_OVERLAOD") {
-        return SYS_SUB_CMD_SYSTEM_OVERLAOD;
+    if(cmd == "SYS_SUB_CMD_SYSTEM_OVERLOAD") {
+        return SYS_SUB_CMD_SYSTEM_OVERLOAD;
     }
     if(cmd == "SYS_SUB_CMD_SYSTEM_STATUS") {
         return SYS_SUB_CMD_SYSTEM_STATUS;

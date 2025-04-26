@@ -14,7 +14,7 @@
  *  GNU Affero General Public License for more details.
  *
  *  You should have received a copy of the GNU Affero General Public License
- *  along with this program. If not, see <http://www.gnu.org/licenses/agpl.txt>.
+ *  along with this program. If not, see <https://www.gnu.org/licenses/agpl.txt>.
  *
  */
 
@@ -61,7 +61,7 @@ enum CanSystemSubCommand {
     SYS_SUB_CMD_FAST_READ_MFX                      = 0x07,
 //    SYS_SUB_CMD_Gleisprotokoll frei schalten       = 0x08,
 //    SYS_SUB_CMD_System MFX Neuanmeldezähler setzen = 0x09,
-    SYS_SUB_CMD_SYSTEM_OVERLAOD                    = 0x0A,
+    SYS_SUB_CMD_SYSTEM_OVERLOAD                    = 0x0A,
     SYS_SUB_CMD_SYSTEM_STATUS                      = 0x0B,
     SYS_SUB_CMD_SYSTEM_IDENTIFIER                  = 0x0C,
     SYS_SUB_CMD_MFX_SEEK                           = 0x30,
