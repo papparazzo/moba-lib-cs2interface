@@ -19,6 +19,7 @@
  */
 
 #include "configloklistreader.h"
+#include "configreaderexception.h"
 
 void ConfigLoklistReader::handleConfigData(const std::string &data) {
     locomotives.clear();
@@ -41,7 +42,9 @@ void ConfigLoklistReader::handleConfigData(const std::string &data) {
 
         if(k == " .minor" && v != "4") {
             throw ConfigReaderException{"minor version != 4"};
-        } else if(k == " .name") {
+        }
+
+        if(k == " .name") {
             name = v;
         } else if(k == " .uid") {
             curLoco = std::make_shared<Locomotive>();

@@ -21,10 +21,9 @@
 #pragma once
 
 #include "configreaderhandlerinterface.h"
-#include "configreaderexception.h"
 #include <map>
 
-class ConfigLoklistReader: public ConfigReaderHandlerInterface {
+class ConfigLoklistReader final : public ConfigReaderHandlerInterface {
 public:
 
     struct Locomotive {
@@ -41,7 +40,7 @@ public:
     void handleConfigData(const std::string &data) override;
 
 protected:
-    std::string getToken(const std::string &t, std::string &v);
+    static std::string getToken(const std::string &t, std::string &v);
 };
 
 using Locomotives = std::map<std::uint32_t, std::shared_ptr<ConfigLoklistReader::Locomotive>>;

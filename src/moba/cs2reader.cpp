@@ -29,23 +29,23 @@
 
 CS2Reader::~CS2Reader() noexcept {
     if(fd_read != -1) {
-        ::close(fd_read);
+        close(fd_read);
     }
 }
 
-void CS2Reader::connect(int port) {
-    struct sockaddr_in s_addr_read{};
+void CS2Reader::connect(const int port) {
+    sockaddr_in s_addr_read{};
 
-    if((fd_read = ::socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) == -1) {
+    if((fd_read = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) == -1) {
         throw CS2ConnectorException{"socket-creation for reading failed"};
     }
 
-    ::memset((char *) &s_addr_read, 0, sizeof(s_addr_read));
+    memset(&s_addr_read, 0, sizeof(s_addr_read));
     s_addr_read.sin_family = AF_INET;
     s_addr_read.sin_port = htons(port);
     s_addr_read.sin_addr.s_addr = htonl(INADDR_ANY);
 
-    if(::bind(fd_read, (struct sockaddr*)&s_addr_read, sizeof(s_addr_read)) == -1) {
+    if(bind(fd_read, reinterpret_cast<sockaddr *>(&s_addr_read), sizeof(s_addr_read)) == -1) {
         throw CS2ConnectorException{"binding failed"};
     }
 }
@@ -53,7 +53,7 @@ void CS2Reader::connect(int port) {
 CS2CanCommand CS2Reader::read() const {
     CS2CanCommand data;
 
-    struct sockaddr_in s_addr_other{};
+    sockaddr_in s_addr_other{};
     socklen_t slen = sizeof(s_addr_other);
 
     // Try again on the interrupted function call

@@ -29,8 +29,8 @@ void ConfigReader::addHandler(const ConfigReaderHandlerPtr& handler) {
 }
 
 ConfigReader::HandlerReturn ConfigReader::handleCanCommand(const CS2CanCommand &cmd) {
-    if(cmd.header[1] != static_cast<uint8_t>(CanCommand::CMD_CONFIG_DATA_STREAM)) {
-        return ConfigReader::NOT_HANDLED;
+    if(cmd.header[1] != static_cast<uint8_t>(CMD_CONFIG_DATA_STREAM)) {
+        return NOT_HANDLED;
     }
 
     static bool firstByte = false;
@@ -49,7 +49,7 @@ ConfigReader::HandlerReturn ConfigReader::handleCanCommand(const CS2CanCommand &
             cfgData.dataLengthCompressed = cmd.getDoubleWordAt0();
             cfgData.dataCompressed.clear();
             cfgData.dataCompressed.reserve(cfgData.dataLengthCompressed);
-            return ConfigReader::HANDLED_MORE_TO_COME;
+            return HANDLED_MORE_TO_COME;
 
         case 8:
             if(firstByte) {
@@ -63,9 +63,9 @@ ConfigReader::HandlerReturn ConfigReader::handleCanCommand(const CS2CanCommand &
             if(cfgData.dataCompressed.size() >= cfgData.dataLengthCompressed) {
                 parsing = false;
                 handleConfigWriter();
-                return ConfigReader::HANDLED_AND_FINISHED;
+                return HANDLED_AND_FINISHED;
             }
-            return ConfigReader::HANDLED_MORE_TO_COME;
+            return HANDLED_MORE_TO_COME;
 
         default:
 // FIXME make this possible
@@ -79,8 +79,8 @@ ConfigReader::HandlerReturn ConfigReader::handleCanCommand(const CS2CanCommand &
     }
 }
 
-std::uint16_t ConfigReader::updateCRC(std::uint16_t crc, std::uint8_t input) {
-    crc = crc ^ (input << 8);
+std::uint16_t ConfigReader::updateCRC(std::uint16_t crc, const std::uint8_t input) {
+    crc = crc ^ input << 8;
     for(int i = 0; i < 8; i++) {
         if((crc & 0x8000) == 0x8000) {
             crc = crc << 1;

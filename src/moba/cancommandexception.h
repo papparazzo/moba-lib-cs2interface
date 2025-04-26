@@ -23,7 +23,7 @@
 #include <exception>
 #include <string>
 
-class CanCommandException: public std::exception {
+class CanCommandException final : public std::exception {
     
     std::string what_;
     

@@ -24,6 +24,8 @@
 
 class CanCommandHandlerInterface {
 public:
+    virtual ~CanCommandHandlerInterface() = default;
+
     enum HandlerReturn {
         NOT_HANDLED = 0,
         HANDLED_MORE_TO_COME = 1,

@@ -24,22 +24,19 @@
 #include "configreaderhandlerinterface.h"
 #include "cs2cancommand.h"
 #include "configreaderexception.h"
-#include <exception>
-#include <cstdint>
 #include <string>
 #include <vector>
 #include <zlib.h>
-#include <functional>
 #include <map>
 
-class ConfigReader: public CanCommandHandlerInterface {
+class ConfigReader final : public CanCommandHandlerInterface {
 public:
 
     ConfigReader() = default;
 
     ConfigReader(const ConfigReader& orig) = delete;
 
-    virtual ~ConfigReader() noexcept = default;
+    ~ConfigReader() noexcept override = default;
 
     HandlerReturn handleCanCommand(const CS2CanCommand &cmd) override;
 
@@ -65,7 +62,7 @@ protected:
 
     } cfgData;
 
-    struct ZipStream {
+    struct ZipStream final {
         ZipStream() {
             strm.zalloc = Z_NULL;
             strm.zfree = Z_NULL;
@@ -77,7 +74,8 @@ protected:
                 throw ConfigReaderException{"inflateInit failed"};
             }
         }
-        virtual ~ZipStream() {
+
+        ~ZipStream() {
             inflateEnd(&strm);
         }
         z_stream strm{};

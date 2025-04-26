@@ -30,7 +30,8 @@ class ConfigDumpReader: public ConfigReaderHandlerInterface {
 
 public:
     explicit ConfigDumpReader(std::string name);
-    virtual ~ConfigDumpReader() noexcept = default;
+
+    ~ConfigDumpReader() noexcept override = default;
 
     [[nodiscard]] std::string getName() const override;
 
