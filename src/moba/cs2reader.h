@@ -22,7 +22,6 @@
 
 #include "cs2cancommand.h"
 
-#include <string>
 #include <memory>
 
 class CS2Reader final {
@@ -37,7 +36,9 @@ public:
     CS2Reader& operator=(const CS2Reader&) = delete;
 
     void connect(int port = DEFAULT_PORT_READ);
-    [[nodiscard]] auto read() const -> CS2CanCommand;
+
+    [[nodiscard]]
+    auto read() const -> CS2CanCommand;
 
 protected:
     int fd_read{-1};

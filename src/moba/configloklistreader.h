@@ -23,7 +23,7 @@
 #include "configreaderhandlerinterface.h"
 #include "locomotivefunctions.h"
 
-class ConfigLoklistReader final : public ConfigReaderHandlerInterface {
+class ConfigLoklistReader final: public ConfigReaderHandlerInterface {
 public:
 
     explicit
@@ -36,7 +36,7 @@ public:
 
     void handleConfigData(const std::string &data) override;
 
-protected:
+private:
     static std::string getToken(const std::string &t, std::string &v);
     LocomotiveFunctionsPtr locomotiveFunctions;
 };

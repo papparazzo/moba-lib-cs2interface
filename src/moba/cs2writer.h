@@ -42,7 +42,7 @@ public:
     void connect(const std::string &host, int port = DEFAULT_PORT_WRITE);
     void send(const CS2CanCommand &data);
 
-protected:
+private:
     sockaddr_in s_addr_write{};
     int fd_write{-1};
     std::mutex m;
