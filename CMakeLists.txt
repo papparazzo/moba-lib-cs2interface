@@ -19,6 +19,7 @@ add_library(
     src/moba/cs2reader.cpp
     src/moba/cs2utils.cpp
     src/moba/cs2writer.cpp
+    src/moba/locomotivefunctions.cpp
 )
 
 install(TARGETS moba-lib-cs2interface)

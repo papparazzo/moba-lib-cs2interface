@@ -21,8 +21,12 @@
 #include "configloklistreader.h"
 #include "configreaderexception.h"
 
+ConfigLoklistReader::ConfigLoklistReader(LocomotiveFunctionsPtr locomotiveFunctions) :
+locomotiveFunctions{std::move(locomotiveFunctions)} {
+}
+
 void ConfigLoklistReader::handleConfigData(const std::string &data) {
-    locomotives.clear();
+    locomotiveFunctions->clear();
 
     std::string::size_type p = 0;
     std::string::size_type f;
@@ -32,7 +36,7 @@ void ConfigLoklistReader::handleConfigData(const std::string &data) {
 
     std::string name;
 
-    std::shared_ptr<Locomotive> curLoco;
+    LocomotivePtr curLoco;
 
     while((f = data.find('\n', p)) != std::string::npos) {
         auto t = data.substr(p, f - p);
@@ -49,7 +53,7 @@ void ConfigLoklistReader::handleConfigData(const std::string &data) {
         } else if(k == " .uid") {
             curLoco = std::make_shared<Locomotive>();
             curLoco->name = name;
-            locomotives[std::stoul(v, nullptr, 16)] = curLoco;
+            locomotiveFunctions->addLocomotive(std::stoul(v, nullptr, 16), curLoco);
         } else if(k == " ..nr") {
             n = v;
         } else if(k == " ..typ") {

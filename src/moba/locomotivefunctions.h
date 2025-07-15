@@ -1,5 +1,5 @@
 /*
- *  Project:    moba-lib-cs2interface
+*  Project:    moba-lib-cs2interface
  *
  *  Copyright (C) 2020 Stefan Paproth <pappi-@gmx.de>
  *
@@ -20,23 +20,34 @@
 
 #pragma once
 
-#include "configreaderhandlerinterface.h"
-#include "locomotivefunctions.h"
+#include <map>
+#include <string>
+#include <memory>
+#include <mutex>
 
-class ConfigLoklistReader final : public ConfigReaderHandlerInterface {
+struct Locomotive {
+    std::string name;
+    std::map<std::uint32_t, std::uint32_t> functions;
+};
+
+using LocomotivePtr = std::shared_ptr<Locomotive>;
+
+class LocomotiveFunctions {
 public:
 
-    explicit
-    ConfigLoklistReader(LocomotiveFunctionsPtr locomotiveFunctions);
+    void clear();
 
     [[nodiscard]]
-    std::string getName() const override {
-        return "lokomotive";
-    }
+    std::uint32_t getFunction(std::uint32_t localId, std::uint32_t functionId);
 
-    void handleConfigData(const std::string &data) override;
+    [[nodiscard]]
+    std::string getName(std::uint32_t localId);
 
-protected:
-    static std::string getToken(const std::string &t, std::string &v);
-    LocomotiveFunctionsPtr locomotiveFunctions;
+    void addLocomotive(std::uint32_t localId, LocomotivePtr locomotive);
+
+private:
+    std::map<std::uint32_t, LocomotivePtr> locomotives;
+    std::mutex m;
 };
+
+using LocomotiveFunctionsPtr = std::shared_ptr<LocomotiveFunctions>;
