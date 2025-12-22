@@ -44,8 +44,8 @@ inline CS2CanCommand setLocDirection(const std::uint32_t localId, const std::uin
     return CS2CanCommand{CMD_LOCO_DIRECTION, 5, localId, direction};
 }
 
-inline CS2CanCommand setSwitch(const std::uint32_t localId, const bool r, const bool on) {
-    return CS2CanCommand{CMD_SET_SWITCH, 6, localId, static_cast<std::uint8_t>(r ? 0 : 1), static_cast<std::uint8_t>(on ? 0 : 1)};
+inline CS2CanCommand setSwitch(const std::uint32_t localId, const bool red, const bool on) {
+    return CS2CanCommand{CMD_SET_SWITCH, 6, localId, static_cast<std::uint8_t>(red ? 1 : 0), static_cast<std::uint8_t>(on ? 0 : 1)};
 }
 
 inline CS2CanCommand setLocoHalt(const std::uint32_t localId) {
