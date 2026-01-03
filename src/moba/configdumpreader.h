@@ -24,7 +24,7 @@
 
 #include <string>
 
-class ConfigDumpReader: public ConfigReaderHandlerInterface {
+class ConfigDumpReader final: public ConfigReaderHandlerInterface {
 
     std::string name;
 

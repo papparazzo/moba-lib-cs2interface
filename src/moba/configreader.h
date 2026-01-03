@@ -54,7 +54,7 @@ protected:
     std::map<std::string, ConfigReaderHandlerPtr> handlers;
 
     struct ConfigData {
-        std::uint32_t dataLengthDecompresed;
+        std::uint32_t dataLengthDecompressed;
         std::uint32_t dataLengthCompressed;
         std::uint16_t crc;
 

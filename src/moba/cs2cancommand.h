@@ -20,6 +20,7 @@
 
 #pragma once
 
+// ReSharper disable once CppUnusedIncludeDirective
 #include <cstdint>
 #include <cstring>
 #include <arpa/inet.h>

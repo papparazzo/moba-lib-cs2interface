@@ -24,7 +24,7 @@
 #include "cs2cancommand.h"
 #include <set>
 
-class PrintCanCommand: public CanCommandHandlerInterface {
+class PrintCanCommand final : public CanCommandHandlerInterface {
 public:
     PrintCanCommand() = default;
 
@@ -32,7 +32,7 @@ public:
 
     PrintCanCommand(const std::set<CanCommand> &allowedCommands, const std::set<CanSystemSubCommand> &allowedSubCommands);
 
-    virtual ~PrintCanCommand() noexcept = default;
+    ~PrintCanCommand() noexcept override = default;
 
     HandlerReturn handleCanCommand(const CS2CanCommand &cmd) override;
 
@@ -40,6 +40,6 @@ protected:
     std::set<CanCommand> allowedCommands;
     std::set<CanSystemSubCommand> allowedSubCommands;
 
-    bool printCommand(const CS2CanCommand &cmd);
+    bool printCommand(const CS2CanCommand &cmd) const;
 };
 

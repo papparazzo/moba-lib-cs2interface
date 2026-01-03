@@ -1,5 +1,5 @@
 /*
- *  Project:    moba-lib-cs2interace
+ *  Project:    moba-lib-cs2interface
  *
  *  Copyright (C) 2020 Stefan Paproth <pappi-@gmx.de>
  *
@@ -54,7 +54,7 @@ ConfigReader::HandlerReturn ConfigReader::handleCanCommand(const CS2CanCommand &
         case 8:
             if(firstByte) {
                 firstByte = false;
-                cfgData.dataLengthDecompresed = cmd.getDoubleWordAt0();
+                cfgData.dataLengthDecompressed = cmd.getDoubleWordAt0();
             }
             for(unsigned char i : cmd.data) {
                 cfgData.dataCompressed.push_back(i);
@@ -119,16 +119,16 @@ void ConfigReader::unzipData() {
         return;
     }
 
-    unsigned char out[cfgData.dataLengthDecompresed];
+    unsigned char out[cfgData.dataLengthDecompressed];
 
-    zipStream.strm.avail_out = cfgData.dataLengthDecompresed;
+    zipStream.strm.avail_out = cfgData.dataLengthDecompressed;
     zipStream.strm.next_out = out;
 
     if(inflate(&zipStream.strm, Z_NO_FLUSH) != Z_STREAM_END) {
         throw ConfigReaderException{"decompress of stream failed"};
     }
 
-    const auto d = std::string(reinterpret_cast<char*>(out), cfgData.dataLengthDecompresed);
+    const auto d = std::string(reinterpret_cast<char*>(out), cfgData.dataLengthDecompressed);
 
     const auto p = d.find(']');
     if(std::string::npos == p) {

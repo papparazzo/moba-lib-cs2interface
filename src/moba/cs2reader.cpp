@@ -54,10 +54,10 @@ CS2CanCommand CS2Reader::read() const {
     CS2CanCommand data;
 
     sockaddr_in s_addr_other{};
-    socklen_t slen = sizeof(s_addr_other);
+    socklen_t sockAddrLen = sizeof(s_addr_other);
 
     // Try again on the interrupted function call
-    while(recvfrom(fd_read, &data, sizeof(data), 0, reinterpret_cast<sockaddr *>(&s_addr_other), &slen) == -1) {
+    while(recvfrom(fd_read, &data, sizeof(data), 0, reinterpret_cast<sockaddr *>(&s_addr_other), &sockAddrLen) == -1) {
         if(errno != EINTR) {
             throw CS2ConnectorException{std::strerror(errno)};
         }

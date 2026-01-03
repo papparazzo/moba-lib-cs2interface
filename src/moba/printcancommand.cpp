@@ -32,7 +32,7 @@ allowedCommands{allowedCommands}, allowedSubCommands{allowedSubCommands} {
 
 PrintCanCommand::HandlerReturn PrintCanCommand::handleCanCommand(const CS2CanCommand &cmd) {
     if(!printCommand(cmd)) {
-        return PrintCanCommand::NOT_HANDLED;
+        return NOT_HANDLED;
     }
 
     printf(
@@ -58,7 +58,7 @@ PrintCanCommand::HandlerReturn PrintCanCommand::handleCanCommand(const CS2CanCom
         response = true;
     }
 
-    std::uint8_t head = cmd.header[1] & ~0x01;
+    const std::uint8_t head = cmd.header[1] & ~0x01;
 
     std::cout << (response ? "[R] " : "[ ] ") << getCommandAsString(head);
 
@@ -69,21 +69,21 @@ PrintCanCommand::HandlerReturn PrintCanCommand::handleCanCommand(const CS2CanCom
     std::cout << std::endl;
     std::cout << "---------------------------------------------------------------";
     std::cout << std::endl;
-    return PrintCanCommand::HANDLED_AND_FINISHED;
+    return HANDLED_AND_FINISHED;
 }
 
-bool PrintCanCommand::printCommand(const CS2CanCommand &cmd) {
+bool PrintCanCommand::printCommand(const CS2CanCommand &cmd) const {
     if(allowedCommands.empty() && allowedSubCommands.empty()) {
         return true;
     }
 
-    auto head = static_cast<CanCommand>(cmd.header[1] & ~0x01);
+    const auto head = static_cast<CanCommand>(cmd.header[1] & ~0x01);
 
-    if(allowedCommands.find(head) != allowedCommands.end()) {
+    if(allowedCommands.contains(head)) {
         return true;
     }
 
-    if(head != CanCommand::CMD_SYSTEM) {
+    if(head != CMD_SYSTEM) {
         return false;
     }
 
@@ -91,9 +91,7 @@ bool PrintCanCommand::printCommand(const CS2CanCommand &cmd) {
         return true;
     }
 
-    auto sub = static_cast<CanSystemSubCommand>(cmd.data[0]);
-
-    if(allowedSubCommands.find(sub) != allowedSubCommands.end()) {
+    if(allowedSubCommands.contains(static_cast<CanSystemSubCommand>(cmd.data[0]))) {
         return true;
     }
 

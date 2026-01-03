@@ -23,7 +23,7 @@
 #include <exception>
 #include <string>
 
-class ConfigReaderException: public std::exception {
+class ConfigReaderException final: public std::exception {
 
     std::string what_;
     
