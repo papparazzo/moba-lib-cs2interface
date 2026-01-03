@@ -22,27 +22,10 @@
 
 #include "cs2cancommand.h"
 
-#include <memory>
-
-#include "ireader.h"
-
-class CS2Reader final: public IReader {
+class IReader {
 public:
-    static constexpr int DEFAULT_PORT_READ = 15730;
-
-    explicit CS2Reader(int port = DEFAULT_PORT_READ);
-
-    CS2Reader(const CS2Reader&) = delete;
-    CS2Reader(CS2Reader&&) = delete;
-    CS2Reader& operator=(const CS2Reader&) = delete;
-
-    ~CS2Reader() noexcept override;
+    virtual ~IReader() = default;
 
     [[nodiscard]]
-    auto read() const -> CS2CanCommand override;
-
-protected:
-    int fd_read{-1};
+    virtual auto read() const -> CS2CanCommand = 0;
 };
-
-using CS2ReaderPtr = std::shared_ptr<CS2Reader>;

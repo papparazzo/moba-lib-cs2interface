@@ -28,19 +28,21 @@
 
 #include <netinet/ip.h>
 
-class CS2Writer final {
+#include "iwriter.h"
+
+class CS2Writer final: public IWriter {
 public:
     static constexpr int DEFAULT_PORT_WRITE = 15731;
 
-    CS2Writer() = default;
+    explicit CS2Writer(const std::string &host, int port = DEFAULT_PORT_WRITE);
+
     CS2Writer(const CS2Writer&) = delete;
     CS2Writer(CS2Writer&&) = delete;
     CS2Writer& operator=(const CS2Writer&) = delete;
 
-    ~CS2Writer() noexcept;
+    ~CS2Writer() noexcept override;
 
-    void connect(const std::string &host, int port = DEFAULT_PORT_WRITE);
-    void send(const CS2CanCommand &data);
+    void send(const CS2CanCommand &data) override;
 
 private:
     sockaddr_in s_addr_write{};

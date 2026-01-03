@@ -25,17 +25,7 @@
 #include <unistd.h>
 #include <cstring>
 
-CS2Writer::~CS2Writer() noexcept {
-    if(fd_write != -1) {
-        close(fd_write);
-    }
-}
-
-void CS2Writer::connect(const std::string &host, const int port) {
-    if(fd_write != -1) {
-        close(fd_write);
-    }
-
+CS2Writer::CS2Writer(const std::string &host, const int port) {
     if((fd_write = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) == -1) {
         throw CS2ConnectorException{"socket-creation for writing failed"};
     }
@@ -46,6 +36,12 @@ void CS2Writer::connect(const std::string &host, const int port) {
 
     if(inet_aton(host.c_str(), &s_addr_write.sin_addr) == 0) {
         throw CS2ConnectorException{"inet_aton failed"};
+    }
+}
+
+CS2Writer::~CS2Writer() noexcept {
+    if(fd_write != -1) {
+        close(fd_write);
     }
 }
 
@@ -63,5 +59,3 @@ void CS2Writer::send(const CS2CanCommand &data) {
         throw CS2ConnectorException("sending failed");
     }
 }
-
-

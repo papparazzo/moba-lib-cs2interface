@@ -27,13 +27,7 @@
 
 #include <cerrno>
 
-CS2Reader::~CS2Reader() noexcept {
-    if(fd_read != -1) {
-        close(fd_read);
-    }
-}
-
-void CS2Reader::connect(const int port) {
+CS2Reader::CS2Reader(const int port) {
     sockaddr_in s_addr_read{};
 
     if((fd_read = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) == -1) {
@@ -47,6 +41,12 @@ void CS2Reader::connect(const int port) {
 
     if(bind(fd_read, reinterpret_cast<sockaddr *>(&s_addr_read), sizeof(s_addr_read)) == -1) {
         throw CS2ConnectorException{"binding failed"};
+    }
+}
+
+CS2Reader::~CS2Reader() noexcept {
+    if(fd_read != -1) {
+        close(fd_read);
     }
 }
 
