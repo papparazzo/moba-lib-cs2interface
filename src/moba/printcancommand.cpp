@@ -62,7 +62,7 @@ PrintCanCommand::HandlerReturn PrintCanCommand::handleCanCommand(const CS2CanCom
 
     std::cout << (response ? "[R] " : "[ ] ") << getCommandAsString(head);
 
-    if(head == CMD_SYSTEM) {
+    if(head == static_cast<std::uint8_t>(CanCommand::CMD_SYSTEM)) {
         std::cout << " - " << getSystemSubCommandAsString(cmd.data[4]);
     }
 
@@ -83,7 +83,7 @@ bool PrintCanCommand::printCommand(const CS2CanCommand &cmd) const {
         return true;
     }
 
-    if(head != CMD_SYSTEM) {
+    if(head != CanCommand::CMD_SYSTEM) {
         return false;
     }
 

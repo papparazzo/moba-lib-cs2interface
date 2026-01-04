@@ -29,7 +29,7 @@ void ConfigReader::addHandler(const ConfigReaderHandlerPtr& handler) {
 }
 
 ConfigReader::HandlerReturn ConfigReader::handleCanCommand(const CS2CanCommand &cmd) {
-    if(cmd.header[1] != static_cast<uint8_t>(CMD_CONFIG_DATA_STREAM)) {
+    if(cmd.header[1] != static_cast<uint8_t>(CanCommand::CMD_CONFIG_DATA_STREAM)) {
         return NOT_HANDLED;
     }
 

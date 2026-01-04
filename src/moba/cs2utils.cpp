@@ -24,73 +24,73 @@
 
 std::string getCommandAsString(const int cmd) {
     switch(cmd) {
-        case CMD_SYSTEM:
+        case CanCommand::CMD_SYSTEM:
             return "CMD_SYSTEM";
 
-        case CMD_LOCO_DISCOVERY:
+        case CanCommand::CMD_LOCO_DISCOVERY:
             return "CMD_LOCO_DISCOVERY";
 
-        case CMD_MFX_BIND:
+        case CanCommand::CMD_MFX_BIND:
             return "CMD_MFX_BIND";
 
-        case CMD_MFX_VERIFY:
+        case CanCommand::CMD_MFX_VERIFY:
             return "CMD_MFX_VERIFY";
 
-        case CMD_LOCO_SPEED:
+        case CanCommand::CMD_LOCO_SPEED:
             return "CMD_LOCO_SPEED";
 
-        case CMD_LOCO_DIRECTION:
+        case CanCommand::CMD_LOCO_DIRECTION:
             return "CMD_LOCO_DIRECTION";
 
-        case CMD_LOCO_FUNCTION:
+        case CanCommand::CMD_LOCO_FUNCTION:
             return "CMD_LOCO_FUNCTION";
 
-        case CMD_READ_CONFIG:
+        case CanCommand::CMD_READ_CONFIG:
             return "CMD_READ_CONFIG";
 
-        case CMD_WRITE_CONFIG:
+        case CanCommand::CMD_WRITE_CONFIG:
             return "CMD_WRITE_CONFIG";
 
-        case CMD_SET_SWITCH:
+        case CanCommand::CMD_SET_SWITCH:
             return "CMD_SET_SWITCH";
 
-        case CMD_ATTACHMENTS_CONFIG:
+        case CanCommand::CMD_ATTACHMENTS_CONFIG:
             return "CMD_ATTACHMENTS_CONFIG";
 
-        case CMD_S88_POLLING:
+        case CanCommand::CMD_S88_POLLING:
             return "CMD_S88_POLLING";
 
-        case CMD_S88_EVENT:
+        case CanCommand::CMD_S88_EVENT:
             return "CMD_S88_EVENT";
 
-        case CMD_SX1_EVENT:
+        case CanCommand::CMD_SX1_EVENT:
             return "CMD_SX1_EVENT";
 
-        case CMD_PING:
+        case CanCommand::CMD_PING:
             return "CMD_PING";
 
-        case CMD_UPDATE_OFFER:
+        case CanCommand::CMD_UPDATE_OFFER:
             return "CMD_UPDATE_OFFER";
 
-        case CMD_READ_CONFIG_DATA:
+        case CanCommand::CMD_READ_CONFIG_DATA:
             return "CMD_READ_CONFIG_DATA";
 
-        case CMD_BOOTLOADER_CAN:
+        case CanCommand::CMD_BOOTLOADER_CAN:
             return "CMD_BOOTLOADER_CAN";
 
-        case CMD_BOOTLOADER_TRACK:
+        case CanCommand::CMD_BOOTLOADER_TRACK:
             return "CMD_BOOTLOADER_TRACK";
 
-        case CMD_STATUS_DATA_CONFIGURATION:
+        case CanCommand::CMD_STATUS_DATA_CONFIGURATION:
             return "CMD_STATUS_DATA_CONFIGURATION";
 
-        case CMD_CONFIG_DATA_QUERY:
+        case CanCommand::CMD_CONFIG_DATA_QUERY:
             return "CMD_CONFIG_DATA_QUERY";
 
-        case CMD_CONFIG_DATA_STREAM:
+        case CanCommand::CMD_CONFIG_DATA_STREAM:
             return "CMD_CONFIG_DATA_STREAM";
 
-        case CMD_60128_CONNECT_6021_DATA_STREAM:
+        case CanCommand::CMD_60128_CONNECT_6021_DATA_STREAM:
             return "CMD_60128_CONNECT_6021_DATA_STREAM";
 
         default:
@@ -100,44 +100,44 @@ std::string getCommandAsString(const int cmd) {
 
 std::string getSystemSubCommandAsString(const int subCmd) {
     switch(subCmd) {
-        case SYS_SUB_CMD_SYSTEM_STOP:
+        case CanSystemSubCommand::SYS_SUB_CMD_SYSTEM_STOP:
             return "SYS_SUB_CMD_SYSTEM_STOP";
 
-        case SYS_SUB_CMD_SYSTEM_GO:
+        case CanSystemSubCommand::SYS_SUB_CMD_SYSTEM_GO:
             return "SYS_SUB_CMD_SYSTEM_GO";
 
-        case SYS_SUB_CMD_SYSTEM_HALT:
+        case CanSystemSubCommand::SYS_SUB_CMD_SYSTEM_HALT:
             return "SYS_SUB_CMD_SYSTEM_HALT";
 
-        case SYS_SUB_CMD_LOCO_EMERGENCY_STOP:
+        case CanSystemSubCommand::SYS_SUB_CMD_LOCO_EMERGENCY_STOP:
             return "SYS_SUB_CMD_LOCO_EMERGENCY_STOP";
 
-        case SYS_SUB_CMD_LOCO_CYCLE_STOP:
+        case CanSystemSubCommand::SYS_SUB_CMD_LOCO_CYCLE_STOP:
             return "SYS_SUB_CMD_LOCO_CYCLE_STOP";
 
-        //case SYS_SUB_CMD_Lok Datenprotokoll
-        case SYS_SUB_CMD_CIRCUIT_TIME_ATTACHMENTS_DECODER:
+        //case CanSystemSubCommand::SYS_SUB_CMD_Lok Datenprotokoll
+        case CanSystemSubCommand::SYS_SUB_CMD_CIRCUIT_TIME_ATTACHMENTS_DECODER:
             return "SYS_SUB_CMD_CIRCUIT_TIME_ATTACHMENTS_DECODER";
 
-        case SYS_SUB_CMD_FAST_READ_MFX:
+        case CanSystemSubCommand::SYS_SUB_CMD_FAST_READ_MFX:
             return "SYS_SUB_CMD_FAST_READ_MFX";
 
-        //case SYS_SUB_CMD_Gleisprotokoll frei schalten
-        //case SYS_SUB_CMD_System MFX Neuanmeldezähler s
+        //case CanSystemSubCommand::SYS_SUB_CMD_Gleisprotokoll frei schalten
+        //case CanSystemSubCommand::SYS_SUB_CMD_System MFX Neuanmeldezähler s
 
-        case SYS_SUB_CMD_SYSTEM_OVERLOAD:
+        case CanSystemSubCommand::SYS_SUB_CMD_SYSTEM_OVERLOAD:
             return "SYS_SUB_CMD_SYSTEM_OVERLOAD";
 
-        case SYS_SUB_CMD_SYSTEM_STATUS:
+        case CanSystemSubCommand::SYS_SUB_CMD_SYSTEM_STATUS:
             return "SYS_SUB_CMD_SYSTEM_STATUS";
 
-        case SYS_SUB_CMD_SYSTEM_IDENTIFIER:
+        case CanSystemSubCommand::SYS_SUB_CMD_SYSTEM_IDENTIFIER:
             return "SYS_SUB_CMD_SYSTEM_IDENTIFIER";
 
-        case SYS_SUB_CMD_MFX_SEEK:
+        case CanSystemSubCommand::SYS_SUB_CMD_MFX_SEEK:
             return "SYS_SUB_CMD_MFX_SEEK";
 
-        case SYS_SUB_CMD_SYSTEM_RESET:
+        case CanSystemSubCommand::SYS_SUB_CMD_SYSTEM_RESET:
             return "SYS_SUB_CMD_SYSTEM_RESET";
 
         default:
@@ -147,116 +147,116 @@ std::string getSystemSubCommandAsString(const int subCmd) {
 
 CanCommand getCommandFromString(const std::string &cmd) {
     if(cmd == "CMD_SYSTEM") {
-        return CMD_SYSTEM;
+         return CanCommand::CMD_SYSTEM;
     }
     if(cmd == "CMD_LOCO_DISCOVERY") {
-        return CMD_LOCO_DISCOVERY;
+         return CanCommand::CMD_LOCO_DISCOVERY;
     }
     if(cmd == "CMD_MFX_BIND") {
-        return CMD_MFX_BIND;
+         return CanCommand::CMD_MFX_BIND;
     }
     if(cmd == "CMD_MFX_VERIFY") {
-        return CMD_MFX_VERIFY;
+         return CanCommand::CMD_MFX_VERIFY;
     }
     if(cmd == "CMD_LOCO_SPEED") {
-        return CMD_LOCO_SPEED;
+         return CanCommand::CMD_LOCO_SPEED;
     }
     if(cmd == "CMD_LOCO_DIRECTION") {
-        return CMD_LOCO_DIRECTION;
+         return CanCommand::CMD_LOCO_DIRECTION;
     }
     if(cmd == "CMD_LOCO_FUNCTION") {
-        return CMD_LOCO_FUNCTION;
+         return CanCommand::CMD_LOCO_FUNCTION;
     }
     if(cmd == "CMD_READ_CONFIG") {
-        return CMD_READ_CONFIG;
+         return CanCommand::CMD_READ_CONFIG;
     }
     if(cmd == "CMD_WRITE_CONFIG") {
-        return CMD_WRITE_CONFIG;
+         return CanCommand::CMD_WRITE_CONFIG;
     }
     if(cmd == "CMD_SET_SWITCH") {
-        return CMD_SET_SWITCH;
+         return CanCommand::CMD_SET_SWITCH;
     }
     if(cmd == "CMD_ATTACHMENTS_CONFIG") {
-        return CMD_ATTACHMENTS_CONFIG;
+         return CanCommand::CMD_ATTACHMENTS_CONFIG;
     }
     if(cmd == "CMD_S88_POLLING") {
-        return CMD_S88_POLLING;
+         return CanCommand::CMD_S88_POLLING;
     }
     if(cmd == "CMD_S88_EVENT") {
-        return CMD_S88_EVENT;
+         return CanCommand::CMD_S88_EVENT;
     }
     if(cmd == "CMD_SX1_EVENT") {
-        return CMD_SX1_EVENT;
+         return CanCommand::CMD_SX1_EVENT;
     }
     if(cmd == "CMD_PING") {
-        return CMD_PING;
+         return CanCommand::CMD_PING;
     }
     if(cmd == "CMD_UPDATE_OFFER") {
-        return CMD_UPDATE_OFFER;
+         return CanCommand::CMD_UPDATE_OFFER;
     }
     if(cmd == "CMD_READ_CONFIG_DATA") {
-        return CMD_READ_CONFIG_DATA;
+         return CanCommand::CMD_READ_CONFIG_DATA;
     }
     if(cmd == "CMD_BOOTLOADER_CAN") {
-        return CMD_BOOTLOADER_CAN;
+         return CanCommand::CMD_BOOTLOADER_CAN;
     }
     if(cmd == "CMD_BOOTLOADER_TRACK") {
-        return CMD_BOOTLOADER_TRACK;
+         return CanCommand::CMD_BOOTLOADER_TRACK;
     }
     if(cmd == "CMD_STATUS_DATA_CONFIGURATION") {
-        return CMD_STATUS_DATA_CONFIGURATION;
+         return CanCommand::CMD_STATUS_DATA_CONFIGURATION;
     }
     if(cmd == "CMD_CONFIG_DATA_QUERY") {
-        return CMD_CONFIG_DATA_QUERY;
+         return CanCommand::CMD_CONFIG_DATA_QUERY;
     }
     if(cmd == "CMD_CONFIG_DATA_STREAM") {
-        return CMD_CONFIG_DATA_STREAM;
+         return CanCommand::CMD_CONFIG_DATA_STREAM;
     }
     if(cmd == "CMD_60128_CONNECT_6021_DATA_STREAM") {
-        return CMD_60128_CONNECT_6021_DATA_STREAM;
+         return CanCommand::CMD_60128_CONNECT_6021_DATA_STREAM;
     }
     throw CanCommandException{"Invalid can command given"};
 }
 
 CanSystemSubCommand getSystemSubCommandFromString(const std::string &cmd) {
     if(cmd == "SYS_SUB_CMD_SYSTEM_STOP") {
-        return SYS_SUB_CMD_SYSTEM_STOP;
+        return CanSystemSubCommand::SYS_SUB_CMD_SYSTEM_STOP;
     }
     if(cmd == "SYS_SUB_CMD_SYSTEM_GO") {
-        return SYS_SUB_CMD_SYSTEM_GO;
+        return CanSystemSubCommand::SYS_SUB_CMD_SYSTEM_GO;
     }
     if(cmd == "SYS_SUB_CMD_SYSTEM_HALT") {
-        return SYS_SUB_CMD_SYSTEM_HALT;
+        return CanSystemSubCommand::SYS_SUB_CMD_SYSTEM_HALT;
     }
     if(cmd == "SYS_SUB_CMD_LOCO_EMERGENCY_STOP") {
-        return SYS_SUB_CMD_LOCO_EMERGENCY_STOP;
+        return CanSystemSubCommand::SYS_SUB_CMD_LOCO_EMERGENCY_STOP;
     }
     if(cmd == "SYS_SUB_CMD_LOCO_CYCLE_STOP") {
-        return SYS_SUB_CMD_LOCO_CYCLE_STOP;
+        return CanSystemSubCommand::SYS_SUB_CMD_LOCO_CYCLE_STOP;
     }
-    //    return         SYS_SUB_CMD_Lok Datenprotokoll
+    //    return CanSystemSubCommand::        SYS_SUB_CMD_Lok Datenprotokoll
     if(cmd == "SYS_SUB_CMD_CIRCUIT_TIME_ATTACHMENTS_DECODER") {
-        return SYS_SUB_CMD_CIRCUIT_TIME_ATTACHMENTS_DECODER;
+        return CanSystemSubCommand::SYS_SUB_CMD_CIRCUIT_TIME_ATTACHMENTS_DECODER;
     }
     if(cmd == "SYS_SUB_CMD_FAST_READ_MFX") {
-        return SYS_SUB_CMD_FAST_READ_MFX;
+        return CanSystemSubCommand::SYS_SUB_CMD_FAST_READ_MFX;
     }
-    //    return         SYS_SUB_CMD_Gleisprotokoll frei schalten
-    //    return         SYS_SUB_CMD_System MFX Neuanmeldezähler s
+    //    return CanSystemSubCommand::        SYS_SUB_CMD_Gleisprotokoll frei schalten
+    //    return CanSystemSubCommand::        SYS_SUB_CMD_System MFX Neuanmeldezähler s
     if(cmd == "SYS_SUB_CMD_SYSTEM_OVERLOAD") {
-        return SYS_SUB_CMD_SYSTEM_OVERLOAD;
+        return CanSystemSubCommand::SYS_SUB_CMD_SYSTEM_OVERLOAD;
     }
     if(cmd == "SYS_SUB_CMD_SYSTEM_STATUS") {
-        return SYS_SUB_CMD_SYSTEM_STATUS;
+        return CanSystemSubCommand::SYS_SUB_CMD_SYSTEM_STATUS;
     }
     if(cmd == "SYS_SUB_CMD_SYSTEM_IDENTIFIER") {
-        return SYS_SUB_CMD_SYSTEM_IDENTIFIER;
+        return CanSystemSubCommand::SYS_SUB_CMD_SYSTEM_IDENTIFIER;
     }
     if(cmd == "SYS_SUB_CMD_MFX_SEEK") {
-        return SYS_SUB_CMD_MFX_SEEK;
+        return CanSystemSubCommand::SYS_SUB_CMD_MFX_SEEK;
     }
     if(cmd == "SYS_SUB_CMD_SYSTEM_RESET") {
-        return SYS_SUB_CMD_SYSTEM_RESET;
+        return CanSystemSubCommand::SYS_SUB_CMD_SYSTEM_RESET;
     }
     throw CanCommandException{"Invalid sub command given"};
 }

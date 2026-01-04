@@ -25,7 +25,7 @@
 #include <cstring>
 #include <arpa/inet.h>
 
-enum CanCommand {
+enum class CanCommand {
     CMD_SYSTEM                                     = 0x00,
     CMD_LOCO_DISCOVERY                             = 0x02,
     CMD_MFX_BIND                                   = 0x04,
@@ -51,7 +51,7 @@ enum CanCommand {
     CMD_60128_CONNECT_6021_DATA_STREAM             = 0x44,
 };
 
-enum CanSystemSubCommand {
+enum class CanSystemSubCommand {
     SYS_SUB_CMD_SYSTEM_STOP                        = 0x00,
     SYS_SUB_CMD_SYSTEM_GO                          = 0x01,
     SYS_SUB_CMD_SYSTEM_HALT                        = 0x02,
@@ -70,7 +70,7 @@ enum CanSystemSubCommand {
 };
 
 struct CS2CanCommand {
-    explicit CS2CanCommand(const CanCommand cmd = CMD_SYSTEM) {
+    explicit CS2CanCommand(const CanCommand cmd = CanCommand::CMD_SYSTEM) {
         setHeader(cmd);
     }
 
