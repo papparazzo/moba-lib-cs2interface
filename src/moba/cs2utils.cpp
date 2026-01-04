@@ -23,7 +23,7 @@
 #include "cancommandexception.h"
 
 std::string getCommandAsString(const int cmd) {
-    switch(cmd) {
+    switch(static_cast<CanCommand>(cmd)) {
         case CanCommand::CMD_SYSTEM:
             return "CMD_SYSTEM";
 
@@ -99,7 +99,7 @@ std::string getCommandAsString(const int cmd) {
 }
 
 std::string getSystemSubCommandAsString(const int subCmd) {
-    switch(subCmd) {
+    switch(static_cast<CanSystemSubCommand>(subCmd)) {
         case CanSystemSubCommand::SYS_SUB_CMD_SYSTEM_STOP:
             return "SYS_SUB_CMD_SYSTEM_STOP";
 
