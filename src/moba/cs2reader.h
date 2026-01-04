@@ -28,9 +28,9 @@
 
 class CS2Reader final: public IReader {
 public:
-    static constexpr int DEFAULT_PORT_READ = 15730;
+    static constexpr int DEFAULT_PORT = 15730;
 
-    explicit CS2Reader(int port = DEFAULT_PORT_READ);
+    explicit CS2Reader(int port = DEFAULT_PORT);
 
     CS2Reader(const CS2Reader&) = delete;
     CS2Reader(CS2Reader&&) = delete;
