@@ -35,40 +35,11 @@ PrintCanCommand::HandlerReturn PrintCanCommand::handleCanCommand(const CS2CanCom
         return NOT_HANDLED;
     }
 
-    printf(
-        "%02X %02X - %02X %02X - %02X - %02X %02X %02X %02X - %02X %02X %02X %02X\n",
-        static_cast<unsigned int>(cmd.header[0]),
-        static_cast<unsigned int>(cmd.header[1]),
-        static_cast<unsigned int>(cmd.hash[0]),
-        static_cast<unsigned int>(cmd.hash[1]),
-        static_cast<unsigned int>(cmd.len),
-        static_cast<unsigned int>(cmd.data[0]),
-        static_cast<unsigned int>(cmd.data[1]),
-        static_cast<unsigned int>(cmd.data[2]),
-        static_cast<unsigned int>(cmd.data[3]),
-        static_cast<unsigned int>(cmd.data[4]),
-        static_cast<unsigned int>(cmd.data[5]),
-        static_cast<unsigned int>(cmd.data[6]),
-        static_cast<unsigned int>(cmd.data[7])
-    );
+    std::cout <<
+        getCommandAsString(cmd) << std::endl <<
+        (isResponse(cmd) ? "[R] " : "[ ] ") << getCommandName(cmd) << " - " << getSystemSubCommandName(cmd) << std::endl <<
+        "---------------------------------------------------------------" << std::endl;
 
-    bool response = false;
-
-    if(cmd.header[1] & 0x01) {
-        response = true;
-    }
-
-    const std::uint8_t head = cmd.header[1] & ~0x01;
-
-    std::cout << (response ? "[R] " : "[ ] ") << getCommandAsString(head);
-
-    if(head == static_cast<std::uint8_t>(CanCommand::CMD_SYSTEM)) {
-        std::cout << " - " << getSystemSubCommandAsString(cmd.data[4]);
-    }
-
-    std::cout << std::endl;
-    std::cout << "---------------------------------------------------------------";
-    std::cout << std::endl;
     return HANDLED_AND_FINISHED;
 }
 
