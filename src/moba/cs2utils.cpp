@@ -45,13 +45,17 @@ std::string getCommandAsString(const CS2CanCommand &cmd) {
     return ss.str();
 }
 
+std::string getCommandName(const int cmd) {
+    return getCommandName(static_cast<CanCommand>(cmd));
+}
+
 std::string getCommandName(const CS2CanCommand &cmd) {
     const std::uint8_t head = cmd.header[1] & ~0x01;
     return getCommandName(head);
 }
 
-std::string getCommandName(const int cmd) {
-    switch(static_cast<CanCommand>(cmd)) {
+std::string getCommandName(const CanCommand cmd) {
+    switch(cmd) {
         case CanCommand::CMD_SYSTEM:
             return "CMD_SYSTEM";
 
@@ -134,7 +138,11 @@ std::string getSystemSubCommandName(const CS2CanCommand &cmd) {
 }
 
 std::string getSystemSubCommandName(const int subCmd) {
-    switch(static_cast<CanSystemSubCommand>(subCmd)) {
+    return getSystemSubCommandName(static_cast<CanSystemSubCommand>(subCmd));
+}
+
+std::string getSystemSubCommandName(const CanSystemSubCommand subCmd) {
+    switch(subCmd) {
         case CanSystemSubCommand::SYS_SUB_CMD_SYSTEM_STOP:
             return "SYS_SUB_CMD_SYSTEM_STOP";
 
