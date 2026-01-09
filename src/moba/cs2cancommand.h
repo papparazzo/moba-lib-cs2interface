@@ -21,6 +21,7 @@
 #pragma once
 
 // ReSharper disable once CppUnusedIncludeDirective
+#include <cassert>
 #include <cstdint>
 #include <cstring>
 #include <arpa/inet.h>
@@ -216,7 +217,8 @@ private:
     }
 
     [[nodiscard]]
-    std::uint16_t getWord(const int pos) const {
+    std::uint16_t getWord(const unsigned int pos) const {
+        assert(pos <= 7);
         std::uint16_t data16;
         std::memcpy(&data16, &data[pos], 2);
         return ntohs(data16);
