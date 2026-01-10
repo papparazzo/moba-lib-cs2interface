@@ -25,7 +25,7 @@
 #include <unistd.h>
 #include <cstring>
 
-CS2Writer::CS2Writer(const std::string &host, const int port) {
+CS2Writer::CS2Writer(const std::string &host, const unsigned int port) {
     if((fd_write = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) == -1) {
         throw CS2ConnectorException{"socket-creation for writing failed"};
     }
@@ -56,6 +56,6 @@ void CS2Writer::send(const CS2CanCommand &data) {
         reinterpret_cast<sockaddr *>(&s_addr_write),
         sizeof(s_addr_write)
     ) == -1) {
-        throw CS2ConnectorException("sending failed");
+        throw CS2ConnectorException{"sending failed"};
     }
 }

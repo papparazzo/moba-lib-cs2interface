@@ -30,7 +30,7 @@ class CS2Reader final: public IReader {
 public:
     static constexpr int DEFAULT_PORT = 15730;
 
-    explicit CS2Reader(int port = DEFAULT_PORT);
+    explicit CS2Reader(const std::string &host, unsigned int port = DEFAULT_PORT);
 
     CS2Reader(const CS2Reader&) = delete;
     CS2Reader(CS2Reader&&) = delete;

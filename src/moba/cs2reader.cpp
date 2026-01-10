@@ -27,7 +27,7 @@
 
 #include <cerrno>
 
-CS2Reader::CS2Reader(const int port) {
+CS2Reader::CS2Reader(const std::string &host, const unsigned int port) {
     sockaddr_in s_addr_read{};
 
     if((fd_read = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) == -1) {
@@ -62,5 +62,6 @@ CS2CanCommand CS2Reader::read() const {
             throw CS2ConnectorException{std::strerror(errno)};
         }
     }
+
     return data;
 }

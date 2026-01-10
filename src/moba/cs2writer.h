@@ -34,7 +34,7 @@ class CS2Writer final: public IWriter {
 public:
     static constexpr int DEFAULT_PORT = 15731;
 
-    explicit CS2Writer(const std::string &host, int port = DEFAULT_PORT);
+    explicit CS2Writer(const std::string &host, unsigned int port = DEFAULT_PORT);
 
     CS2Writer(const CS2Writer&) = delete;
     CS2Writer(CS2Writer&&) = delete;
