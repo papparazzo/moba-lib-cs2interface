@@ -28,7 +28,9 @@
 #include "cs2shared.h"
 
 DummyReader::DummyReader(const std::string &fifo) {
-//    if(mkfifo())
+    // TODO: create fifo here!
+
+    //    if(mkfifo())
 
     fd = open(fifo.c_str(), O_RDONLY);
     if(fd < 0) {
@@ -36,12 +38,10 @@ DummyReader::DummyReader(const std::string &fifo) {
     }
 }
 
-CS2CanCommand DummyReader::read() const {
-    CS2CanCommand data;
-
+bool DummyReader::read(CS2CanCommand &data) const {
     if(::read(fd, &data, sizeof(data)) < 0) {
         throw CS2ConnectorException{"::read returns < 0"};
     }
 
-    return data;
+    return true;
 }

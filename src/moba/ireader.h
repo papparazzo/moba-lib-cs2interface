@@ -27,5 +27,5 @@ public:
     virtual ~IReader() = default;
 
     [[nodiscard]]
-    virtual auto read() const -> CS2CanCommand = 0;
+    virtual auto read(CS2CanCommand&) const -> bool = 0;
 };

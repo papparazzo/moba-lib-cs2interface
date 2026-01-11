@@ -128,8 +128,7 @@ CS2Reader::~CS2Reader() noexcept {
     }
 }
 
-CS2CanCommand CS2Reader::read() const {
-    CS2CanCommand data;
+bool CS2Reader::read(CS2CanCommand& data) const {
 
     sockaddr_in s_addr_other{};
     socklen_t sockAddrLen = sizeof(s_addr_other);

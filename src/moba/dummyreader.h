@@ -37,7 +37,7 @@ public:
     ~DummyReader() noexcept override = default;
 
     [[nodiscard]]
-    auto read() const -> CS2CanCommand override;
+    auto read(CS2CanCommand &data) const -> bool override;
 
 private:
     int fd{-1};
