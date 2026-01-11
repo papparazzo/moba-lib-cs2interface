@@ -65,7 +65,7 @@ CS2Reader::CS2Reader(const std::string &host, const unsigned int port, const boo
 
         if(
             setsockopt(fd_read, IPPROTO_IPV6, IPV6_V6ONLY, &off, sizeof(off)) == -1 ||
-            setsockopt(fd_read, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(yes))
+            setsockopt(fd_read, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(yes)) == -1
         ) {
             close(fd_read);
             fd_read = -1;
@@ -81,7 +81,7 @@ CS2Reader::CS2Reader(const std::string &host, const unsigned int port, const boo
     }
 
     if (fd_read == -1) {
-        throw CS2ConnectorException{"failed to bind UDP socket"};
+        throw CS2ConnectorException{"failed to bind UDP socket for reading"};
     }
 
     // ---------- non-blocking ----------
@@ -130,15 +130,31 @@ CS2Reader::~CS2Reader() noexcept {
 
 bool CS2Reader::read(CS2CanCommand& data) const {
 
-    sockaddr_in s_addr_other{};
-    socklen_t sockAddrLen = sizeof(s_addr_other);
+    while(true) {
+        const ssize_t n = recv(fd_read, &data, sizeof(data), 0);
+        const int saved_errno = errno;
 
-    // Try again on the interrupted function call
-    while(recvfrom(fd_read, &data, sizeof(data), 0, reinterpret_cast<sockaddr *>(&s_addr_other), &sockAddrLen) == -1) {
-        if(errno != EINTR) {
-            throw CS2ConnectorException{std::strerror(errno)};
+        if(n == static_cast<ssize_t>(sizeof(data))) {
+            return true;
         }
-    }
 
-    return data;
+        if(errno == EINTR) {
+            continue;
+        }
+
+        if(n == -1) {
+            if(saved_errno == EINTR) {
+                continue;
+            }
+            if(saved_errno == EAGAIN) {
+                return false;
+            }
+            throw CS2ConnectorException{std::strerror(saved_errno)};
+        }
+
+        if(n == 0) {
+            throw CS2ConnectorException{"Connection closed by peer"};
+        }
+        throw CS2ConnectorException{"Partial read occurred"};
+    }
 }
