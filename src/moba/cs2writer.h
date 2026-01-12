@@ -45,7 +45,6 @@ public:
     void send(const CS2CanCommand &data) override;
 
 private:
-    sockaddr_in s_addr_write{};
     int fd_write{-1};
     std::mutex m;
 };

@@ -38,7 +38,6 @@ public:
 
     ~CS2Reader() noexcept override;
 
-    [[nodiscard]]
     auto read(CS2CanCommand& data) const -> bool override;
 
 protected:
