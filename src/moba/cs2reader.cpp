@@ -138,14 +138,11 @@ bool CS2Reader::read(CS2CanCommand& data) const {
             return true;
         }
 
-        if(errno == EINTR) {
-            continue;
-        }
-
         if(n == -1) {
             if(saved_errno == EINTR) {
                 continue;
             }
+            // On non-blocking: No data received...
             if(saved_errno == EAGAIN) {
                 return false;
             }
