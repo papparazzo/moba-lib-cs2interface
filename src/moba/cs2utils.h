@@ -26,22 +26,14 @@
 
 #include "cs2cancommand.h"
 
-std::string getCommandAsString(const CS2CanCommand &cmd);
-
-std::string getCommandName(const CS2CanCommand &cmd);
 std::string getCommandName(CanCommand cmd);
 std::string getCommandName(int cmd);
 
-std::string getSystemSubCommandName(const CS2CanCommand &cmd);
 std::string getSystemSubCommandName(CanSystemSubCommand subCmd);
 std::string getSystemSubCommandName(int subCmd);
 
 CanCommand getCommandFromString(const std::string &cmd);
 CanSystemSubCommand getSystemSubCommandFromString(const std::string &cmd);
-
-inline bool isResponse(const CS2CanCommand &cmd) {
-    return cmd.header[1] & 0x01;
-}
 
 inline CS2CanCommand setLocSpeed(const std::uint32_t localId, const std::uint16_t speed) {
     return CS2CanCommand{CanCommand::CMD_LOCO_SPEED, 6, localId, speed};

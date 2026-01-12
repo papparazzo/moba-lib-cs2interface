@@ -20,10 +20,10 @@
 
 #pragma once
 
-// ReSharper disable once CppUnusedIncludeDirective
-#include <cassert>
 #include <cstdint>
+#include <iomanip>
 #include <cstring>
+#include <stdexcept>
 #include <arpa/inet.h>
 
 enum class CanCommand {
@@ -202,6 +202,59 @@ struct CS2CanCommand {
         return getWord(6);
     }
 
+    [[nodiscard]]
+    bool isSystemCommand() const {
+        return (header[1] & ~0x01) == static_cast<std::uint8_t>(CanCommand::CMD_SYSTEM);
+    }
+
+    [[nodiscard]]
+    CanSystemSubCommand getSystemSubCommand() const {
+        if(!isSystemCommand()) {
+            throw std::out_of_range{"Command is not a sub command"};
+        }
+        return static_cast<CanSystemSubCommand>(data[4]);
+    }
+
+    [[nodiscard]]
+    CanCommand getCanCommand() const {
+        const std::uint8_t head = header[1] & ~0x01;
+        return static_cast<CanCommand>(head);
+    }
+
+    [[nodiscard]]
+    bool isResponse() const {
+        return header[1] & 0x01;
+    }
+
+    [[nodiscard]]
+    std::string getAsString() const {
+        std::stringstream ss;
+        ss << *this;
+        return  ss.str();
+    }
+
+    friend std::ostream& operator<<(std::ostream& os, const CS2CanCommand& cmd) {
+        const std::ios_base::fmtflags flags(os.flags());
+
+        os << std::uppercase << std::hex << std::setfill('0')
+           << std::setw(2) << static_cast<unsigned int>(cmd.header[0]) << " "
+           << std::setw(2) << static_cast<unsigned int>(cmd.header[1]) << " - "
+           << std::setw(2) << static_cast<unsigned int>(cmd.hash[0]) << " "
+           << std::setw(2) << static_cast<unsigned int>(cmd.hash[1]) << " - "
+           << std::setw(2) << static_cast<unsigned int>(cmd.len) << " - "
+           << std::setw(2) << static_cast<unsigned int>(cmd.data[0]) << " "
+           << std::setw(2) << static_cast<unsigned int>(cmd.data[1]) << " "
+           << std::setw(2) << static_cast<unsigned int>(cmd.data[2]) << " "
+           << std::setw(2) << static_cast<unsigned int>(cmd.data[3]) << " - "
+           << std::setw(2) << static_cast<unsigned int>(cmd.data[4]) << " "
+           << std::setw(2) << static_cast<unsigned int>(cmd.data[5]) << " "
+           << std::setw(2) << static_cast<unsigned int>(cmd.data[6]) << " "
+           << std::setw(2) << static_cast<unsigned int>(cmd.data[7]);
+
+        os.flags(flags);
+        return os;
+    }
+
     std::uint8_t header[2]{};
     std::uint8_t hash[2]{};
     std::uint8_t len{};
@@ -218,14 +271,13 @@ private:
 
     [[nodiscard]]
     std::uint16_t getWord(const unsigned int pos) const {
-        assert(pos <= 7);
         std::uint16_t data16;
         std::memcpy(&data16, &data[pos], 2);
         return ntohs(data16);
     }
 
     [[nodiscard]]
-    std::uint32_t getDoubleWord(const int pos) const {
+    std::uint32_t getDoubleWord(const unsigned int pos) const {
         std::uint32_t data32;
         std::memcpy(&data32, &data[pos], 4);
         return ntohl(data32);

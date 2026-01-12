@@ -25,33 +25,8 @@
 #include "cs2cancommand.h"
 #include "cancommandexception.h"
 
-std::string getCommandAsString(const CS2CanCommand &cmd) {
-    std::stringstream ss;
-    ss << std::uppercase << std::hex << std::setfill('0')
-       << std::setw(2) << static_cast<unsigned int>(cmd.header[0]) << " "
-       << std::setw(2) << static_cast<unsigned int>(cmd.header[1]) << " - "
-       << std::setw(2) << static_cast<unsigned int>(cmd.hash[0]) << " "
-       << std::setw(2) << static_cast<unsigned int>(cmd.hash[1]) << " - "
-       << std::setw(2) << static_cast<unsigned int>(cmd.len) << " - "
-       << std::setw(2) << static_cast<unsigned int>(cmd.data[0]) << " "
-       << std::setw(2) << static_cast<unsigned int>(cmd.data[1]) << " "
-       << std::setw(2) << static_cast<unsigned int>(cmd.data[2]) << " "
-       << std::setw(2) << static_cast<unsigned int>(cmd.data[3]) << " - "
-       << std::setw(2) << static_cast<unsigned int>(cmd.data[4]) << " "
-       << std::setw(2) << static_cast<unsigned int>(cmd.data[5]) << " "
-       << std::setw(2) << static_cast<unsigned int>(cmd.data[6]) << " "
-       << std::setw(2) << static_cast<unsigned int>(cmd.data[7]);
-
-    return ss.str();
-}
-
 std::string getCommandName(const int cmd) {
     return getCommandName(static_cast<CanCommand>(cmd));
-}
-
-std::string getCommandName(const CS2CanCommand &cmd) {
-    const std::uint8_t head = cmd.header[1] & ~0x01;
-    return getCommandName(head);
 }
 
 std::string getCommandName(const CanCommand cmd) {
@@ -128,13 +103,6 @@ std::string getCommandName(const CanCommand cmd) {
         default:
             return "UNBEKANNT";
     }
-}
-
-std::string getSystemSubCommandName(const CS2CanCommand &cmd) {
-    if((cmd.header[1] & ~0x01) == static_cast<std::uint8_t>(CanCommand::CMD_SYSTEM)) {
-        return getSystemSubCommandName(cmd.data[4]);
-    }
-    return "";
 }
 
 std::string getSystemSubCommandName(const int subCmd) {
