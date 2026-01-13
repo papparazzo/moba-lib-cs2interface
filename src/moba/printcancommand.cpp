@@ -21,7 +21,6 @@
 #include "printcancommand.h"
 #include "cs2utils.h"
 #include <iostream>
-#include <cstdio>
 
 PrintCanCommand::PrintCanCommand(const std::set<CanCommand> &allowedCommands): allowedCommands{allowedCommands} {
 }
@@ -35,10 +34,12 @@ PrintCanCommand::HandlerReturn PrintCanCommand::handleCanCommand(const CS2CanCom
         return NOT_HANDLED;
     }
 
-    std::cout <<
-        getCommandAsString(cmd) << std::endl <<
-        (isResponse(cmd) ? "[R] " : "[ ] ") << getCommandName(cmd) << " - " << getSystemSubCommandName(cmd) << std::endl <<
-        "---------------------------------------------------------------" << std::endl;
+    std::cout << cmd << std::endl << (cmd.isResponse() ? "[R] " : "[ ] ") << getCommandName(cmd.getCanCommand());
+
+    if(cmd.isSystemCommand()) {
+        std::cout << " - " << getSystemSubCommandName(cmd.getSystemSubCommand());
+    }
+    std::cout << std::endl << "---------------------------------------------------------------" << std::endl;
 
     return HANDLED_AND_FINISHED;
 }
