@@ -26,8 +26,7 @@
 class ConfigLoklistReader final: public ConfigReaderHandlerInterface {
 public:
 
-    explicit
-    ConfigLoklistReader(LocomotiveFunctionsPtr locomotiveFunctions);
+    explicit ConfigLoklistReader(LocomotiveFunctionsPtr locomotiveFunctions);
 
     [[nodiscard]]
     std::string getName() const override {
