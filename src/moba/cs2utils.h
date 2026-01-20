@@ -71,6 +71,10 @@ inline CS2CanCommand ping() {
     return CS2CanCommand{CanCommand::CMD_PING};
 }
 
+inline CS2CanCommand pong() {
+    return ping().setResponse();
+}
+
 inline CS2CanCommand getConfigData(const char *filename) {
     CS2CanCommand cmd;
     unsigned char data[] = {0x00, 0x40, 0x03, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
