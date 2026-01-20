@@ -226,6 +226,16 @@ struct CS2CanCommand {
         return header[1] & 0x01;
     }
 
+    CS2CanCommand setResponse() {
+        header[1] |= 0x01;
+        return *this;
+    }
+
+    CS2CanCommand unsetResponse() {
+        header[1] &= ~0x01;
+        return *this;
+    }
+
     [[nodiscard]]
     std::string getAsString() const {
         std::stringstream ss;
