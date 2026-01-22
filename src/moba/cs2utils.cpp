@@ -18,9 +18,6 @@
  *
  */
 
-#include <sstream>
-#include <iomanip>
-
 #include "cs2utils.h"
 #include "cs2cancommand.h"
 #include "cancommandexception.h"
