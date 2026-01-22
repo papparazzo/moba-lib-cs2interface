@@ -24,16 +24,17 @@
 
 class CS2ConnectorException final : public std::exception {
 
-    std::string what__;
+    std::string what_;
     
 public:
     ~CS2ConnectorException() noexcept override = default;
 
     explicit CS2ConnectorException(const std::string &what) {
-        what__ = what;
+        what_ = what;
     }
 
+    [[nodiscard]]
     const char* what() const noexcept override {
-        return what__.c_str();
+        return what_.c_str();
     }
 };
