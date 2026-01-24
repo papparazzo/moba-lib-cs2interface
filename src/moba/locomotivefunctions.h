@@ -41,6 +41,9 @@ public:
     std::uint32_t getFunction(std::uint32_t localId, std::uint32_t functionId);
 
     [[nodiscard]]
+    LocomotivePtr getFunctions(std::uint32_t localId);
+
+    [[nodiscard]]
     std::string getName(std::uint32_t localId);
 
     void addLocomotive(std::uint32_t localId, LocomotivePtr locomotive);

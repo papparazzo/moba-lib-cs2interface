@@ -56,6 +56,16 @@ std::uint32_t LocomotiveFunctions::getFunction(const std::uint32_t localId, cons
     return funcIter->second;
 }
 
+LocomotivePtr LocomotiveFunctions::getFunctions(const std::uint32_t localId) {
+    std::lock_guard l{m};
+
+    const auto iter = locomotives.find(localId);
+    if(iter == locomotives.end()) {
+        throw std::runtime_error("given localId <" + std::to_string(localId) + "> does not exist");
+    }
+    return iter->second;
+}
+
 void LocomotiveFunctions::addLocomotive(const std::uint32_t localId, LocomotivePtr locomotive) {
     std::lock_guard l{m};
     locomotives[localId] = std::move(locomotive);
