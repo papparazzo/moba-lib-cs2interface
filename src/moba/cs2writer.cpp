@@ -31,6 +31,8 @@
 #include <netinet/in.h>
 #include <netdb.h>
 
+#include "cs2utils.h"
+
 CS2Writer::CS2Writer(const std::string &host, const unsigned int port) {
 
     addrinfo hints{};
@@ -91,12 +93,14 @@ void CS2Writer::send(const CS2CanCommand &data) {
     const ssize_t sent = ::send(fd_write, buffer, size, 0);
 
     if(sent == -1) {
-        throw CS2ConnectorException{
-            std::string{"sending failed: "} + std::system_error(errno, std::system_category()).what()
-        };
+        std::stringstream ss;
+        ss << "sending <" << getCommandName(data.getCanCommand()) << "> failed : " << std::system_error(errno, std::system_category()).what();
+        throw CS2ConnectorException{ss.str()};
     }
 
     if(sent != static_cast<ssize_t>(size)) {
-        throw CS2ConnectorException{"sending failed: only " + std::to_string(sent) + " bytes sent"};
+        std::stringstream ss;
+        ss << "sending <" << getCommandName(data.getCanCommand()) << "> failed : only " + std::to_string(sent) + " bytes sent";
+        throw CS2ConnectorException{ss.str()};
     }
 }
