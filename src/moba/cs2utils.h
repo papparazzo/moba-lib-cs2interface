@@ -47,6 +47,10 @@ inline CS2CanCommand setLocDirection(const std::uint32_t localId, const std::uin
     return CS2CanCommand{CanCommand::CMD_LOCO_DIRECTION, 5, localId, direction};
 }
 
+inline CS2CanCommand setFeedback(const std::uint16_t module, const std::uint16_t contact, const bool oldState, const bool newState, const std::uint16_t time = 0) {
+    return CS2CanCommand{CanCommand::CMD_S88_EVENT, 8, module, contact, static_cast<std::uint8_t>(oldState ? 1 : 0), static_cast<std::uint8_t>(newState ? 1 : 0), time}.setResponse();
+}
+
 inline CS2CanCommand setSwitch(const std::uint32_t localId, const bool red, const bool on) {
     return CS2CanCommand{CanCommand::CMD_SET_SWITCH, 6, localId, static_cast<std::uint8_t>(red ? 1 : 0), static_cast<std::uint8_t>(on ? 0 : 1)};
 }
