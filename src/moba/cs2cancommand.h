@@ -155,6 +155,27 @@ struct CS2CanCommand {
         memcpy(&data[5], &dataWord1, 2);
     }
 
+    // S88 Event...
+    CS2CanCommand(
+        const CanCommand cmd,
+        const std::uint8_t length,
+        std::uint16_t module,
+        std::uint16_t contact,
+        const std::uint8_t oldState,
+        const std::uint8_t newState,
+        std::uint16_t time
+    ) {
+        setHeader(cmd, length);
+        module = htons(module);
+        memcpy(&data[0], &module, 2);
+        contact = htons(contact);
+        memcpy(&data[2], &contact, 2);
+        data[4] = oldState;
+        data[5] = newState;
+        time = htons(time);
+        memcpy(&data[6], &time, 2);
+    }
+
     [[nodiscard]]
     std::uint32_t getUID() const {
         return getDoubleWordAt0();
