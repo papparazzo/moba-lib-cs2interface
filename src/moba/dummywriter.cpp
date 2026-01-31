@@ -24,3 +24,9 @@ void DummyWriter::send(const CS2CanCommand &data) {
     std::lock_guard l{m};
     printCanCommand.handleCanCommand(data);
 }
+
+bool DummyWriter::trySend(const CS2CanCommand &data) {
+    std::lock_guard l{m};
+    printCanCommand.handleCanCommand(data);
+    return true;
+}

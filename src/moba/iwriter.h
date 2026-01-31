@@ -26,4 +26,5 @@ class IWriter {
 public:
     virtual ~IWriter() = default;
     virtual void send(const CS2CanCommand &data) = 0;
+    virtual bool trySend(const CS2CanCommand &data) = 0;
 };

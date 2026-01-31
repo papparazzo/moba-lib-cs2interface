@@ -38,6 +38,7 @@ public:
     ~DummyWriter() noexcept override = default;
 
     void send(const CS2CanCommand &data) override;
+    bool trySend(const CS2CanCommand &data) override;
 
 private:
     PrintCanCommand printCanCommand;

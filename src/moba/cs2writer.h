@@ -43,6 +43,7 @@ public:
     ~CS2Writer() noexcept override;
 
     void send(const CS2CanCommand &data) override;
+    bool trySend(const CS2CanCommand &data) override;
 
 private:
     int fd_write{-1};
