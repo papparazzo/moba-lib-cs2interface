@@ -1,5 +1,5 @@
 /*
-*  Project:    moba-lib-cs2interface
+ *  Project:    moba-lib-cs2interface
  *
  *  Copyright (C) 2020 Stefan Paproth <pappi-@gmx.de>
  *
