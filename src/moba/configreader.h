@@ -23,7 +23,7 @@
 #include "cancommandhandlerinterface.h"
 #include "configreaderhandlerinterface.h"
 #include "cs2cancommand.h"
-#include "configreaderexception.h"
+#include "configexception.h"
 #include <string>
 #include <vector>
 #include <zlib.h>
@@ -71,7 +71,7 @@ protected:
             strm.next_in = Z_NULL;
 
             if(inflateInit(&strm) != Z_OK){
-                throw ConfigReaderException{"inflateInit failed"};
+                throw ConfigException{"inflateInit failed"};
             }
         }
 
