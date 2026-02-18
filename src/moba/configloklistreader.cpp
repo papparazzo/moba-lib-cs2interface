@@ -19,7 +19,7 @@
  */
 
 #include "configloklistreader.h"
-#include "configreaderexception.h"
+#include "configexception.h"
 
 ConfigLoklistReader::ConfigLoklistReader(LocomotiveFunctionsPtr locomotiveFunctions) :
 locomotiveFunctions{std::move(locomotiveFunctions)} {
@@ -45,7 +45,7 @@ void ConfigLoklistReader::handleConfigData(const std::string &data) {
         auto k = getToken(t, v);
 
         if(k == " .minor" && v != "4") {
-            throw ConfigReaderException{"minor version != 4"};
+            throw ConfigException{"minor version != 4"};
         }
 
         if(k == " .name") {
