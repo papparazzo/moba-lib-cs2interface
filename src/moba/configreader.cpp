@@ -37,7 +37,7 @@ ConfigReader::HandlerReturn ConfigReader::handleCanCommand(const CS2CanCommand &
     static bool parsing = false;
 
     if(((cmd.len == 6 || cmd.len == 7) && parsing) || (cmd.len == 8 && !parsing)) {
-        throw ConfigReaderException{"currently parsing"};
+        throw ConfigException{"currently parsing"};
     }
 
     switch(cmd.len) {
@@ -70,7 +70,7 @@ ConfigReader::HandlerReturn ConfigReader::handleCanCommand(const CS2CanCommand &
         default:
 // FIXME make this possible
 #ifdef __cpp_lib_format
-            throw ConfigReaderException{
+            throw ConfigException{
                 std::format("invalid data length <{}> given", cmd.len)
             };
 #else
@@ -104,7 +104,7 @@ std::uint16_t ConfigReader::getCRC(const std::uint8_t *data, const std::size_t l
 void ConfigReader::handleConfigWriter() {
 
     if(getCRC(&cfgData.dataCompressed[0], cfgData.dataCompressed.size()) != cfgData.crc) {
-        throw ConfigReaderException{"crc-check failed!"};
+        throw ConfigException{"crc-check failed!"};
     }
     unzipData();
 }
@@ -125,14 +125,14 @@ void ConfigReader::unzipData() {
     zipStream.strm.next_out = out;
 
     if(inflate(&zipStream.strm, Z_NO_FLUSH) != Z_STREAM_END) {
-        throw ConfigReaderException{"decompress of stream failed"};
+        throw ConfigException{"decompress of stream failed"};
     }
 
     const auto d = std::string(reinterpret_cast<char*>(out), cfgData.dataLengthDecompressed);
 
     const auto p = d.find(']');
     if(std::string::npos == p) {
-        throw ConfigReaderException{"missing ']' in stream"};
+        throw ConfigException{"missing ']' in stream"};
     }
 
     const auto k = d.substr(1, p - 1);
