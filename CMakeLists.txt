@@ -16,12 +16,14 @@ add_library(
     src/moba/configloklistreader.cpp
     src/moba/configdumpreader.cpp
     src/moba/configreader.cpp
+    src/moba/configwriter.cpp
     src/moba/cs2reader.cpp
     src/moba/cs2utils.cpp
     src/moba/cs2writer.cpp
     src/moba/locomotivefunctions.cpp
     src/moba/dummyreader.cpp
     src/moba/dummywriter.cpp
+    src/moba/configdatacompressor.cpp
 )
 
 install(TARGETS moba-lib-cs2interface)
