@@ -24,6 +24,8 @@
 #include <cstring>
 #include <stdexcept>
 #include <arpa/inet.h>
+// ReSharper disable once CppUnusedIncludeDirective
+#include <cstdint>
 
 enum class CanCommand {
     CMD_SYSTEM                                     = 0x00,
