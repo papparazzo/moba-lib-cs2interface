@@ -105,14 +105,16 @@ void CS2Writer::send(const CS2CanCommand &data) {
     const ssize_t sent = ::send(fd_write, buffer, size, 0);
 
     if(sent == -1) {
-        std::stringstream ss;
-        ss << "sending <" << getCommandName(data.getCanCommand()) << "> failed : " << std::system_error(errno, std::system_category()).what();
-        throw CS2ConnectorException{ss.str()};
+        throw CS2ConnectorException{
+            std::format(
+                "sending <{}> failed : only {}", getCommandName(data.getCanCommand()), std::system_error(errno, std::system_category()).what()
+            )
+        };
     }
 
     if(sent != static_cast<ssize_t>(size)) {
-        std::stringstream ss;
-        ss << "sending <" << getCommandName(data.getCanCommand()) << "> failed : only " + std::to_string(sent) + " bytes sent";
-        throw CS2ConnectorException{ss.str()};
+        throw CS2ConnectorException{
+            std::format("sending <{}> failed : only {} bytes sent", getCommandName(data.getCanCommand()), std::to_string(sent))
+        };
     }
 }
