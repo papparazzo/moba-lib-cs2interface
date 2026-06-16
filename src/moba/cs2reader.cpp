@@ -155,3 +155,9 @@ bool CS2Reader::read(CS2CanCommand& data) const {
         throw CS2ConnectorException{"Partial read occurred"};
     }
 }
+
+CS2CanCommand CS2Reader::read() const {
+    CS2CanCommand data;
+    static_cast<void>(read(data));
+    return data;
+}

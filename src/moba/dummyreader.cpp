@@ -45,3 +45,9 @@ bool DummyReader::read(CS2CanCommand &data) const {
 
     return true;
 }
+
+CS2CanCommand DummyReader::read() const {
+    CS2CanCommand data;
+    static_cast<void>(read(data));
+    return data;
+}

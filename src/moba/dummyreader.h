@@ -39,6 +39,9 @@ public:
     [[nodiscard]]
     auto read(CS2CanCommand &data) const -> bool override;
 
+    [[nodiscard]]
+    auto read() const -> CS2CanCommand override;
+
 private:
     int fd{-1};
 };

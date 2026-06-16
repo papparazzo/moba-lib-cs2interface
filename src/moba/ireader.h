@@ -28,4 +28,7 @@ public:
 
     [[nodiscard]]
     virtual auto read(CS2CanCommand&) const -> bool = 0;
+
+    [[nodiscard]]
+    virtual auto read() const -> CS2CanCommand = 0;
 };
