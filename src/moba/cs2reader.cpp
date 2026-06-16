@@ -33,7 +33,7 @@
 #include <sys/socket.h>
 #include <netdb.h>
 
-CS2Reader::CS2Reader(const std::string &host, const unsigned int port, const bool blocking) {
+CS2Reader::CS2Reader(const unsigned int port, const bool blocking) {
 
     // ---------- bind address ----------
     addrinfo hints{};
@@ -85,41 +85,17 @@ CS2Reader::CS2Reader(const std::string &host, const unsigned int port, const boo
     }
 
     // ---------- non-blocking ----------
-    if(!blocking) {
-        if(
-            const int flags = fcntl(fd_read, F_GETFL, 0);
-            flags == -1 || fcntl(fd_read, F_SETFL, flags | O_NONBLOCK) == -1
-        ) {
-            close(fd_read);
-            throw CS2ConnectorException{"failed to set non-blocking mode"};
-        }
+    if(blocking) {
+        return;
     }
-
-    // ---------- connect peer ----------
-    addrinfo peerHints{};
-    peerHints.ai_family   = AF_UNSPEC;
-    peerHints.ai_socktype = SOCK_DGRAM;
-
-    addrinfo *peerRes = nullptr;
 
     if(
-        const int result = getaddrinfo(host.c_str(), service.c_str(), &peerHints, &peerRes);
-        result != 0
+        const int flags = fcntl(fd_read, F_GETFL, 0);
+        flags == -1 || fcntl(fd_read, F_SETFL, flags | O_NONBLOCK) == -1
     ) {
         close(fd_read);
-        throw CS2ConnectorException{std::string{"Resolving peer-host <"} + host + "> failed: " + gai_strerror(result)};
+        throw CS2ConnectorException{"failed to set non-blocking mode"};
     }
-
-    std::unique_ptr<addrinfo, decltype(&freeaddrinfo)> peer_guard(peerRes, freeaddrinfo);
-
-    for (const addrinfo *iter = peerRes; iter != nullptr; iter = iter->ai_next) {
-        if (connect(fd_read, iter->ai_addr, iter->ai_addrlen) == 0 || errno == EINPROGRESS) {
-            return;
-        }
-    }
-
-    close(fd_read);
-    throw CS2ConnectorException{"failed to connect UDP peer"};
 }
 
 CS2Reader::~CS2Reader() noexcept {
