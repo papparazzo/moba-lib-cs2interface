@@ -114,21 +114,19 @@ bool CS2Reader::read(CS2CanCommand& data) const {
             return true;
         }
 
-        if(n == -1) {
-            if(saved_errno == EINTR) {
-                continue;
-            }
-            // On non-blocking: No data received...
-            if(saved_errno == EAGAIN) {
-                return false;
-            }
-            throw CS2ConnectorException{std::strerror(saved_errno)};
+        if(n != -1) {
+            throw CS2ConnectorException{"unexpected datagram size"};
         }
 
-        if(n == 0) {
-            throw CS2ConnectorException{"Connection closed by peer"};
+        if(saved_errno == EINTR) {
+            continue;
         }
-        throw CS2ConnectorException{"Partial read occurred"};
+
+        // On non-blocking: No data received...
+        if(saved_errno == EAGAIN) {
+            return false;
+        }
+        throw CS2ConnectorException{std::strerror(saved_errno)};
     }
 }
 

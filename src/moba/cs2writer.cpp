@@ -21,15 +21,15 @@
 #include "cs2writer.h"
 #include "cs2shared.h"
 
-#include <unistd.h>
-#include <cstring>
-#include <iostream>
-#include <system_error>
-
-#include <sys/socket.h>
+#include <format>
 
 #include <netinet/in.h>
 #include <netdb.h>
+
+#include <system_error>
+#include <sys/socket.h>
+
+#include <unistd.h>
 
 #include "cs2utils.h"
 
@@ -88,9 +88,11 @@ bool CS2Writer::trySend(const CS2CanCommand &data) {
     std::lock_guard l{m};
 
     const auto buffer = reinterpret_cast<const char*>(&data);
-    constexpr size_t size = sizeof(data);
 
-    if(::send(fd_write, buffer, size, 0) != static_cast<ssize_t>(size)) {
+    if(
+        constexpr size_t size = sizeof(data);
+        ::send(fd_write, buffer, size, 0) != static_cast<ssize_t>(size)
+    ) {
         return false;
     }
     return true;

@@ -44,7 +44,7 @@ public:
     [[nodiscard]]
     auto read() const -> CS2CanCommand override;
 
-protected:
+private:
     int fd_read{-1};
 };
 
