@@ -109,7 +109,7 @@ void CS2Writer::send(const CS2CanCommand &data) {
     if(sent == -1) {
         throw CS2ConnectorException{
             std::format(
-                "sending <{}> failed : only {}", getCommandName(data.getCanCommand()), std::system_error(errno, std::system_category()).what()
+                "sending <{}> failed : {}", getCommandName(data.getCanCommand()), std::system_error(errno, std::system_category()).what()
             )
         };
     }
