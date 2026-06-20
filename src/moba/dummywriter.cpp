@@ -21,12 +21,12 @@
 #include "dummywriter.h"
 
 void DummyWriter::send(const CS2CanCommand &data) {
-    std::lock_guard l{m};
+    std::scoped_lock l{m};
     printCanCommand.handleCanCommand(data);
 }
 
 bool DummyWriter::trySend(const CS2CanCommand &data) {
-    std::lock_guard l{m};
+    std::scoped_lock l{m};
     printCanCommand.handleCanCommand(data);
     return true;
 }

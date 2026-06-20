@@ -21,12 +21,12 @@
 #include "locomotivefunctions.h"
 
 void LocomotiveFunctions::clear() {
-    std::lock_guard l{m};
+    std::scoped_lock l{m};
     locomotives.clear();
 }
 
 std::string LocomotiveFunctions::getName(const std::uint32_t localId) {
-    std::lock_guard l{m};
+    std::scoped_lock l{m};
 
     const auto iter = locomotives.find(localId);
     if(iter == locomotives.end()) {
@@ -37,7 +37,7 @@ std::string LocomotiveFunctions::getName(const std::uint32_t localId) {
 }
 
 std::uint32_t LocomotiveFunctions::getFunction(const std::uint32_t localId, const std::uint32_t functionId) {
-    std::lock_guard l{m};
+    std::scoped_lock l{m};
 
     const auto iter = locomotives.find(localId);
     if(iter == locomotives.end()) {
@@ -57,7 +57,7 @@ std::uint32_t LocomotiveFunctions::getFunction(const std::uint32_t localId, cons
 }
 
 LocomotivePtr LocomotiveFunctions::getFunctions(const std::uint32_t localId) {
-    std::lock_guard l{m};
+    std::scoped_lock l{m};
 
     const auto iter = locomotives.find(localId);
     if(iter == locomotives.end()) {
@@ -67,6 +67,6 @@ LocomotivePtr LocomotiveFunctions::getFunctions(const std::uint32_t localId) {
 }
 
 void LocomotiveFunctions::addLocomotive(const std::uint32_t localId, LocomotivePtr locomotive) {
-    std::lock_guard l{m};
+    std::scoped_lock l{m};
     locomotives[localId] = std::move(locomotive);
 }

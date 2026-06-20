@@ -85,7 +85,7 @@ CS2Writer::~CS2Writer() noexcept {
 }
 
 bool CS2Writer::trySend(const CS2CanCommand &data) {
-    std::lock_guard l{m};
+    std::scoped_lock l{m};
 
     const auto buffer = reinterpret_cast<const char*>(&data);
 
@@ -99,7 +99,7 @@ bool CS2Writer::trySend(const CS2CanCommand &data) {
 }
 
 void CS2Writer::send(const CS2CanCommand &data) {
-    std::lock_guard l{m};
+    std::scoped_lock l{m};
 
     const auto buffer = reinterpret_cast<const char*>(&data);
     constexpr size_t size = sizeof(data);
