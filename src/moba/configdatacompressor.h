@@ -37,6 +37,8 @@ public:
 
     static ConfigData zipData(const std::string& data);
 
+    static std::string unzipData(ConfigData &&configData);
+
 private:
     static std::uint16_t getCRC(const std::uint8_t *data, const std::size_t length);
 

@@ -116,6 +116,33 @@ ConfigDataCompressor::ConfigData ConfigDataCompressor::zipData(const std::string
     return configData;
 }
 
+std::string ConfigDataCompressor::unzipData(ConfigData &&configData) {
+    if(getCRC(&configData.dataCompressed[0], configData.dataCompressed.size()) != configData.crc) {
+        throw ConfigException{"crc-check failed!"};
+    }
+
+    ZipDeflateStream zipStream;
+
+    zipStream.strm.next_in = &configData.dataCompressed[4];
+    zipStream.strm.avail_in = configData.dataCompressed.size() - 4;
+
+    if(zipStream.strm.avail_in == 0) {
+        return "";
+    }
+
+    unsigned char out[configData.dataLengthDecompressed];
+
+    zipStream.strm.avail_out = configData.dataLengthDecompressed;
+    zipStream.strm.next_out = out;
+
+    if(inflate(&zipStream.strm, Z_NO_FLUSH) != Z_STREAM_END) {
+        throw ConfigException{"decompress of stream failed"};
+    }
+
+    return {reinterpret_cast<char*>(out), configData.dataLengthDecompressed};
+}
+
+
 std::uint16_t ConfigDataCompressor::getCRC(const std::uint8_t *data, const std::size_t length) {
     std::uint16_t crc = 0xFFFF;
 
