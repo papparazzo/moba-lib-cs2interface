@@ -23,11 +23,11 @@
 #include "cancommandhandlerinterface.h"
 #include "configreaderhandlerinterface.h"
 #include "cs2cancommand.h"
-#include "configexception.h"
 #include <string>
 #include <vector>
-#include <zlib.h>
 #include <map>
+
+#include "configdatacompressor.h"
 
 class ConfigReader final : public CanCommandHandlerInterface {
 public:
@@ -43,41 +43,12 @@ public:
     void addHandler(const ConfigReaderHandlerPtr& handler);
 
 protected:
-    void handleConfigWriter();
+    void handleConfigWriter(ConfigDataCompressor::ConfigData &&configData);
 
     static std::uint16_t updateCRC(std::uint16_t crc, std::uint8_t input);
 
     static std::uint16_t getCRC(const std::uint8_t *data, std::size_t length);
 
-    void unzipData();
-
     std::map<std::string, ConfigReaderHandlerPtr> handlers;
 
-    struct ConfigData {
-        std::uint32_t dataLengthDecompressed;
-        std::uint32_t dataLengthCompressed;
-        std::uint16_t crc;
-
-        std::vector<std::uint8_t> dataCompressed;
-
-    } cfgData;
-
-    struct ZipStream final {
-        ZipStream() {
-            strm.zalloc = Z_NULL;
-            strm.zfree = Z_NULL;
-            strm.opaque = Z_NULL;
-            strm.avail_in = 0;
-            strm.next_in = Z_NULL;
-
-            if(inflateInit(&strm) != Z_OK){
-                throw ConfigException{"inflateInit failed"};
-            }
-        }
-
-        ~ZipStream() {
-            inflateEnd(&strm);
-        }
-        z_stream strm{};
-    };
 };

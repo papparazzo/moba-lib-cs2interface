@@ -20,6 +20,9 @@
 
 #include "configreader.h"
 
+#include "configdatacompressor.h"
+#include "configexception.h"
+
 #if __has_include(<format>)
 #include <format>
 #endif
@@ -36,6 +39,8 @@ ConfigReader::HandlerReturn ConfigReader::handleCanCommand(const CS2CanCommand &
     static bool firstByte = false;
     static bool parsing = false;
 
+    static ConfigDataCompressor::ConfigData configData;
+
     if(((cmd.len == 6 || cmd.len == 7) && parsing) || (cmd.len == 8 && !parsing)) {
         throw ConfigException{"currently parsing"};
     }
@@ -45,24 +50,24 @@ ConfigReader::HandlerReturn ConfigReader::handleCanCommand(const CS2CanCommand &
         case 7:
             parsing = true;
             firstByte = true;
-            cfgData.crc = cmd.getWordAt4();
-            cfgData.dataLengthCompressed = cmd.getDoubleWordAt0();
-            cfgData.dataCompressed.clear();
-            cfgData.dataCompressed.reserve(cfgData.dataLengthCompressed);
+            configData.crc = cmd.getWordAt4();
+            configData.dataLengthCompressed = cmd.getDoubleWordAt0();
+            configData.dataCompressed.clear();
+            configData.dataCompressed.reserve(configData.dataLengthCompressed);
             return HANDLED_MORE_TO_COME;
 
         case 8:
             if(firstByte) {
                 firstByte = false;
-                cfgData.dataLengthDecompressed = cmd.getDoubleWordAt0();
+                configData.dataLengthDecompressed = cmd.getDoubleWordAt0();
             }
             for(unsigned char i : cmd.data) {
-                cfgData.dataCompressed.push_back(i);
+                configData.dataCompressed.push_back(i);
             }
 
-            if(cfgData.dataCompressed.size() >= cfgData.dataLengthCompressed) {
+            if(configData.dataCompressed.size() >= configData.dataLengthCompressed) {
                 parsing = false;
-                handleConfigWriter();
+                handleConfigWriter(std::move(configData));
                 return HANDLED_AND_FINISHED;
             }
             return HANDLED_MORE_TO_COME;
@@ -101,34 +106,9 @@ std::uint16_t ConfigReader::getCRC(const std::uint8_t *data, const std::size_t l
     return crc;
 }
 
-void ConfigReader::handleConfigWriter() {
+void ConfigReader::handleConfigWriter(ConfigDataCompressor::ConfigData &&configData) {
 
-    if(getCRC(&cfgData.dataCompressed[0], cfgData.dataCompressed.size()) != cfgData.crc) {
-        throw ConfigException{"crc-check failed!"};
-    }
-    unzipData();
-}
-
-void ConfigReader::unzipData() {
-    ZipStream zipStream;
-
-    zipStream.strm.next_in = &cfgData.dataCompressed[4];
-    zipStream.strm.avail_in = cfgData.dataCompressed.size() - 4;
-
-    if(zipStream.strm.avail_in == 0) {
-        return;
-    }
-
-    unsigned char out[cfgData.dataLengthDecompressed];
-
-    zipStream.strm.avail_out = cfgData.dataLengthDecompressed;
-    zipStream.strm.next_out = out;
-
-    if(inflate(&zipStream.strm, Z_NO_FLUSH) != Z_STREAM_END) {
-        throw ConfigException{"decompress of stream failed"};
-    }
-
-    const auto d = std::string(reinterpret_cast<char*>(out), cfgData.dataLengthDecompressed);
+    const auto d = ConfigDataCompressor::unzipData(std::move(configData));
 
     const auto p = d.find(']');
     if(std::string::npos == p) {

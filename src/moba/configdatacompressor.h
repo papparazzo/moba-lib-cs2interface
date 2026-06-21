@@ -35,13 +35,13 @@ public:
         std::vector<std::uint8_t> dataCompressed;
     };
 
-    static ConfigData zipData(const std::string& data);
+    static ConfigData zipData(const std::string &data);
 
     static std::string unzipData(ConfigData &&configData);
 
 private:
-    static std::uint16_t getCRC(const std::uint8_t *data, const std::size_t length);
+    static std::uint16_t getCRC(const std::uint8_t *data, std::size_t length);
 
-    static std::uint16_t updateCRC(std::uint16_t crc, const std::uint8_t input);
+    static std::uint16_t updateCRC(std::uint16_t crc, std::uint8_t input);
 };
 
