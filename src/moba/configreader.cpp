@@ -39,8 +39,6 @@ ConfigReader::HandlerReturn ConfigReader::handleCanCommand(const CS2CanCommand &
     static bool firstByte = false;
     static bool parsing = false;
 
-    static ConfigDataCompressor::ConfigData configData;
-
     if(((cmd.len == 6 || cmd.len == 7) && parsing) || (cmd.len == 8 && !parsing)) {
         throw ConfigException{"currently parsing"};
     }
@@ -67,7 +65,7 @@ ConfigReader::HandlerReturn ConfigReader::handleCanCommand(const CS2CanCommand &
 
             if(configData.dataCompressed.size() >= configData.dataLengthCompressed) {
                 parsing = false;
-                handleConfigWriter(std::move(configData));
+                handleConfigWriter();
                 return HANDLED_AND_FINISHED;
             }
             return HANDLED_MORE_TO_COME;
@@ -106,9 +104,9 @@ std::uint16_t ConfigReader::getCRC(const std::uint8_t *data, const std::size_t l
     return crc;
 }
 
-void ConfigReader::handleConfigWriter(ConfigDataCompressor::ConfigData &&configData) {
+void ConfigReader::handleConfigWriter() {
 
-    const auto d = ConfigDataCompressor::unzipData(std::move(configData));
+    const auto d = ConfigDataCompressor::unzipData(configData);
 
     const auto p = d.find(']');
     if(std::string::npos == p) {

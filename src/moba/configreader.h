@@ -42,8 +42,8 @@ public:
 
     void addHandler(const ConfigReaderHandlerPtr& handler);
 
-protected:
-    void handleConfigWriter(ConfigDataCompressor::ConfigData &&configData);
+private:
+    void handleConfigWriter();
 
     static std::uint16_t updateCRC(std::uint16_t crc, std::uint8_t input);
 
@@ -51,4 +51,5 @@ protected:
 
     std::map<std::string, ConfigReaderHandlerPtr> handlers;
 
+    ConfigDataCompressor::ConfigData configData{};
 };

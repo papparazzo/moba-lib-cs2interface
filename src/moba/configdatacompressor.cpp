@@ -21,6 +21,9 @@
 #include "configdatacompressor.h"
 
 #include <zlib.h>
+#include <cstring>
+#include <limits>
+#include <arpa/inet.h>
 
 #include "configwriter.h"
 
@@ -72,6 +75,10 @@ ConfigDataCompressor::ConfigData ConfigDataCompressor::zipData(const std::string
 
     ZipDeflateStream zipStream;
 
+    if(data.size() > std::numeric_limits<std::uint32_t>::max()) {
+        throw ConfigException{"decompressed data too large"};
+    }
+
     configData.dataLengthDecompressed = static_cast<std::uint32_t>(data.size());
 
     if(configData.dataLengthDecompressed == 0) {
@@ -116,32 +123,35 @@ ConfigDataCompressor::ConfigData ConfigDataCompressor::zipData(const std::string
     return configData;
 }
 
-std::string ConfigDataCompressor::unzipData(ConfigData &&configData) {
+std::string ConfigDataCompressor::unzipData(const ConfigData &configData) {
+    if(configData.dataCompressed.size() < 4) {
+        throw ConfigException{"compressed data too small"};
+    }
+
     if(getCRC(&configData.dataCompressed[0], configData.dataCompressed.size()) != configData.crc) {
         throw ConfigException{"crc-check failed!"};
     }
 
     ZipDeflateStream zipStream;
 
-    zipStream.strm.next_in = &configData.dataCompressed[4];
+    zipStream.strm.next_in = const_cast<Bytef*>(configData.dataCompressed.data() + 4);
     zipStream.strm.avail_in = configData.dataCompressed.size() - 4;
 
     if(zipStream.strm.avail_in == 0) {
         return "";
     }
 
-    unsigned char out[configData.dataLengthDecompressed];
+    std::string out(configData.dataLengthDecompressed, '\0');
 
-    zipStream.strm.avail_out = configData.dataLengthDecompressed;
-    zipStream.strm.next_out = out;
+    zipStream.strm.avail_out = static_cast<uInt>(out.size());
+    zipStream.strm.next_out = reinterpret_cast<Bytef*>(out.data());
 
     if(inflate(&zipStream.strm, Z_NO_FLUSH) != Z_STREAM_END) {
         throw ConfigException{"decompress of stream failed"};
     }
 
-    return {reinterpret_cast<char*>(out), configData.dataLengthDecompressed};
+    return out;
 }
-
 
 std::uint16_t ConfigDataCompressor::getCRC(const std::uint8_t *data, const std::size_t length) {
     std::uint16_t crc = 0xFFFF;
