@@ -260,30 +260,18 @@ struct CS2CanCommand {
 
     [[nodiscard]]
     std::string getAsString() const {
-        std::stringstream ss;
-        ss << *this;
-        return  ss.str();
+        return std::format(
+            "{:02X} {:02X} - {:02X} {:02X} - {:02X} - "
+            "{:02X} {:02X} {:02X} {:02X} - "
+            "{:02X} {:02X} {:02X} {:02X}",
+            header[0], header[1], hash[0], hash[1], len,
+            data[0], data[1], data[2], data[3],
+            data[4], data[5], data[6], data[7]
+        );
     }
 
     friend std::ostream& operator<<(std::ostream& os, const CS2CanCommand& cmd) {
-        const std::ios_base::fmtflags flags(os.flags());
-
-        os << std::uppercase << std::hex << std::setfill('0')
-           << std::setw(2) << static_cast<unsigned int>(cmd.header[0]) << " "
-           << std::setw(2) << static_cast<unsigned int>(cmd.header[1]) << " - "
-           << std::setw(2) << static_cast<unsigned int>(cmd.hash[0]) << " "
-           << std::setw(2) << static_cast<unsigned int>(cmd.hash[1]) << " - "
-           << std::setw(2) << static_cast<unsigned int>(cmd.len) << " - "
-           << std::setw(2) << static_cast<unsigned int>(cmd.data[0]) << " "
-           << std::setw(2) << static_cast<unsigned int>(cmd.data[1]) << " "
-           << std::setw(2) << static_cast<unsigned int>(cmd.data[2]) << " "
-           << std::setw(2) << static_cast<unsigned int>(cmd.data[3]) << " - "
-           << std::setw(2) << static_cast<unsigned int>(cmd.data[4]) << " "
-           << std::setw(2) << static_cast<unsigned int>(cmd.data[5]) << " "
-           << std::setw(2) << static_cast<unsigned int>(cmd.data[6]) << " "
-           << std::setw(2) << static_cast<unsigned int>(cmd.data[7]);
-
-        os.flags(flags);
+        os << cmd.getAsString();
         return os;
     }
 
