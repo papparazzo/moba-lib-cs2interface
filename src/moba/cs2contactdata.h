@@ -28,7 +28,7 @@ struct CS2ContactData {
     int portOut;
 
     friend std::ostream& operator<<(std::ostream& os, const CS2ContactData& data) {
-        os << "CS2ContactData: host<" << data.host << ">, in<" << data.portIn << ">, out<" << data.portOut << ">";
+        os << std::format("CS2ContactData: host<{}>, in<{}>, out<{}>", data.host, data.portIn, data.portOut);
         return os;
     }
 };
